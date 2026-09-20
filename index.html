@@ -49,6 +49,10 @@
     position:sticky;top:0;z-index:20;
     border-bottom:1px solid var(--linha);
   }
+  /* Antes do login: só a tela de login aparece — topo e menu somem por completo. */
+  body.deslogado .topo,
+  body.deslogado nav{display:none!important;}
+  body.deslogado main#tela{padding-bottom:24px;}
   .topo .icobtn{
     width:44px;height:44px;border-radius:12px;background:none;color:var(--verde-esc);font-size:22px;
     display:flex;align-items:center;justify-content:center;padding:0;line-height:1;
@@ -128,6 +132,16 @@
   .mod .md{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35;}
   .mod .chev{position:absolute;right:12px;top:14px;color:var(--verde);opacity:.6;}
 
+  /* ---------- Ações de medicamentos ---------- */
+  .med-acoes{display:flex;flex-direction:column;gap:12px;margin:4px 0 20px;}
+  .med-acao-btn{width:100%;min-height:78px;border:1.7px solid var(--verde);border-radius:16px;background:#fff;color:var(--verde-esc);padding:13px 16px;display:flex;align-items:center;gap:13px;text-align:left;cursor:pointer;font:inherit;box-shadow:0 2px 7px rgba(25,80,45,.06);}
+  .med-acao-btn:active{background:var(--verde-lite);transform:scale(.995);}
+  .med-acao-ico{width:46px;height:46px;flex:0 0 46px;border-radius:50%;background:var(--verde-lite);display:flex;align-items:center;justify-content:center;font-size:24px;}
+  .med-acao-conteudo{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1;}
+  .med-acao-conteudo strong{font-size:17px;line-height:1.2;color:var(--verde-esc);}
+  .med-acao-conteudo small{font-size:12.5px;line-height:1.3;color:var(--muted);font-weight:500;}
+  .med-acao-seta{font-size:28px;line-height:1;color:var(--verde);flex:0 0 auto;}
+
   .faixa{background:#eef4ef;border-radius:var(--radius);padding:14px 16px;margin-top:18px;display:flex;align-items:center;gap:12px;}
   .faixa .fic{color:var(--verde);font-size:22px;}
   .faixa .ft{font-size:13.5px;color:#3a4a3d;line-height:1.4;}
@@ -181,10 +195,16 @@
   .btn-perigo{background:#fff;color:var(--perigo);border:1.5px solid var(--perigo);box-shadow:none;}
   .btn-fant{background:none;color:var(--muted);padding:10px;box-shadow:none;}
   .lado{display:flex;gap:12px;} .lado .btn{margin-bottom:0;}
+  .cloud-card{background:#fff;border-radius:var(--radius);box-shadow:var(--sombra);padding:14px;margin-bottom:10px;}
+  .cloud-status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:5px 9px;border-radius:18px;background:#eef2ef;color:#5a6b5e;}
+  .cloud-status.on{background:var(--verde-lite);color:var(--verde-esc);}
+  .cloud-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  .cloud-grid .btn{margin:0;}
+  .cloud-note{font-size:12px;color:var(--muted);line-height:1.4;margin-top:8px;}
   .animal-actions{margin-top:18px;margin-bottom:22px;}
   .animal-actions > .btn{margin-bottom:14px;}
   .animal-actions .lado{margin-bottom:12px;}
-  .animal-actions .lado + .btn{margin-bottom:0;}
+  .animal-actions .lado + .btn{margin-bottom:14px;}
   .animal-saida{margin-top:4px;margin-bottom:28px;}
   .manejo-hist{margin-top:26px;}
   .manejo-sec{background:#fff;border-radius:var(--radius);box-shadow:var(--sombra);padding:14px;margin-bottom:14px;}
@@ -216,14 +236,52 @@
   /* ---------- Nav ---------- */
   nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
     background:#fff;border-top:1px solid var(--linha);display:flex;z-index:30;box-shadow:0 -2px 10px rgba(20,40,25,.05);}
-  nav button{flex:1;background:none;color:var(--muted);font-size:11px;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;}
+  nav button{flex:1;background:none;color:var(--muted);font-size:10px;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;line-height:1.08;padding:3px 2px;}
+  nav button>span:last-child{max-width:86px;}
   nav button .ic{font-size:21px;line-height:1;} nav button.ativo{color:var(--verde);}
   .tile img{width:46px;height:46px;object-fit:contain;display:block;}
   .mic img{width:38px;height:38px;object-fit:contain;display:block;}
   nav .ic img{width:28px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;}
+
+  /* ---------- Início / módulos principais ---------- */
+  .home-title{margin:4px 4px 14px}
+  .home-greet{margin:6px 4px 16px}
+  .home-greet h2{margin:0;color:var(--verde-esc);font-size:25px;line-height:1.1;font-weight:800}
+  .home-greet .hg-sub{margin-top:4px;font-size:15px;color:var(--muted)}
+  .home-title h2{margin:0;color:var(--verde-esc);font-size:27px;line-height:1.05}
+  .home-title .meta{margin-top:5px;font-size:15px}
+  .home-module{background:linear-gradient(145deg,#fbfefb,#f0f8f2);border:1px solid #e4eee7;border-radius:20px;
+    padding:16px;margin-bottom:14px;box-shadow:var(--sombra);cursor:pointer;}
+  .home-module:active{transform:scale(.995)}
+  .home-module-head{display:grid;grid-template-columns:76px 1fr 24px;align-items:center;gap:12px}
+  .home-module-icon{width:76px;height:76px;border-radius:50%;background:#e4f3e8;display:flex;align-items:center;justify-content:center;
+    font-size:39px;overflow:hidden}
+  .home-module-icon img{width:68px;height:68px;object-fit:contain}
+  .home-module .hm-title{font-size:21px;font-weight:800;color:var(--verde-esc);line-height:1.1}
+  .home-module .hm-sub{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.35}
+  .home-module .hm-chev{font-size:28px;color:var(--verde);font-weight:400;text-align:right}
+  .home-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+  .home-stat{background:#fff;border:1px solid var(--linha);border-radius:14px;padding:10px 8px;min-height:68px;
+    display:flex;flex-direction:column;justify-content:center}
+  .home-stat .hs-label{font-size:11px;color:var(--muted);line-height:1.15}
+  .home-stat .hs-value{font-size:18px;font-weight:800;color:var(--verde-esc);margin-top:4px;line-height:1.1}
+  .home-stat.neg .hs-value{color:var(--perigo)}
+  .home-hint{background:#f3f7fb;border:1px solid #dce7f1;border-radius:17px;padding:14px 15px;margin-top:4px;
+    display:flex;gap:12px;align-items:flex-start}
+  .home-hint .hi-icon{width:34px;height:34px;border-radius:50%;background:#4e83b6;color:#fff;display:flex;align-items:center;
+    justify-content:center;font-weight:800;flex-shrink:0}
+  .home-hint b{color:#174d78;font-size:14px}
+  .home-hint .meta{font-size:12px;margin-top:3px}
+  @media(max-width:380px){
+    .home-module-head{grid-template-columns:62px 1fr 18px}
+    .home-module-icon{width:62px;height:62px}
+    .home-module-icon img{width:56px;height:56px}
+    .home-module .hm-title{font-size:18px}
+    .home-stat .hs-value{font-size:16px}
+  }
 </style>
 </head>
-<body>
+<body class="deslogado">
 
 <div class="topo">
   <button class="icobtn" onclick="menuConfig()">☰</button>
@@ -234,33 +292,246 @@
 <main id="tela"></main>
 
 <nav>
-  <button data-aba="painel" class="ativo"><span class="ic">⌂</span>Painel</button>
-  <button data-aba="lotes"><span class="ic">▤</span>Lotes</button>
-  <button data-aba="animais"><span class="ic"><img src="boi.png" alt=""></span>Animais</button>
-  <button data-aba="perfil"><span class="ic">◔</span>Perfil</button>
+  <button data-aba="inicio" class="ativo"><span class="ic">⌂</span><span>Início</span></button>
+  <button data-aba="painel"><span class="ic"><img src="boi.png" alt=""></span><span>Gestão Operacional</span></button>
+  <button data-aba="financeiro"><span class="ic">💰</span><span>Gestão Financeira</span></button>
+  <button data-aba="perfil"><span class="ic">◔</span><span>Perfil</span></button>
 </nav>
 
 <div class="ov" id="ov"><div class="modal" id="md"></div></div>
 
 <script>
 /* ======================= BANCO (IndexedDB, offline) ======================= */
-const DB="rebanho_v2"; let db;
-function abrirDB(){return new Promise((ok,er)=>{const r=indexedDB.open(DB,6);
-  r.onupgradeneeded=e=>{const d=e.target.result;
+/*
+  V50 — preparação para sincronização futura.
+  O app continua 100% local/offline. Nenhuma conexão com nuvem foi adicionada.
+
+  Metadados adicionados automaticamente aos registros:
+  - created_at: criação local
+  - updated_at: última alteração local
+  - deleted_at: exclusão lógica (tombstone) para futura sincronização
+  - sync_status: pending_create / pending_update / pending_delete / synced
+  - sync_version: contador local de alterações
+
+  A store "sync_meta" guarda somente dados técnicos deste aparelho e NÃO entra no backup.
+*/
+const SUPABASE_URL="https://qjpcccfexgxlykdzffpx.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_IgESM3xZNVXrAokEYIHzWw_fbrZqHDx";
+const CLOUD_APP_VERSION="77";
+const AUTH_STORAGE_KEY="rebanho_supabase_session";
+
+function authSession(){
+  try{return JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY)||"null");}catch(e){return null;}
+}
+function saveAuthSession(s){
+  if(s)localStorage.setItem(AUTH_STORAGE_KEY,JSON.stringify(s));
+  else localStorage.removeItem(AUTH_STORAGE_KEY);
+}
+async function sbFetch(path,opt={}){
+  const session=authSession();
+  const headers=Object.assign({
+    "apikey":SUPABASE_PUBLISHABLE_KEY,
+    "Content-Type":"application/json"
+  },opt.headers||{});
+  if(session&&session.access_token)headers["Authorization"]="Bearer "+session.access_token;
+  // V76: não permite que respostas GET da API sejam reaproveitadas pelo cache
+  // HTTP do navegador. O service worker também ignora todo domínio externo.
+  const res=await fetch(SUPABASE_URL+path,Object.assign({},opt,{headers,cache:"no-store"}));
+  let body=null;
+  const ct=res.headers.get("content-type")||"";
+  try{body=ct.includes("application/json")?await res.json():await res.text();}catch(e){}
+  if(res.status===401&&session&&session.refresh_token&&!opt._retry){
+    const ok=await refreshAuthSession();
+    if(ok)return sbFetch(path,Object.assign({},opt,{_retry:true}));
+  }
+  if(!res.ok){
+    const msg=(body&&typeof body==="object"&&(body.msg||body.message||body.error_description||body.error))||String(body||("HTTP "+res.status));
+    throw new Error(msg);
+  }
+  return body;
+}
+async function refreshAuthSession(){
+  const s=authSession(); if(!s||!s.refresh_token)return false;
+  try{
+    const res=await fetch(SUPABASE_URL+"/auth/v1/token?grant_type=refresh_token",{
+      method:"POST",
+      headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json"},
+      body:JSON.stringify({refresh_token:s.refresh_token})
+    });
+    if(!res.ok){saveAuthSession(null);return false;}
+    const n=await res.json(); saveAuthSession(n); return true;
+  }catch(e){return false;}
+}
+async function authUser(){
+  const s=authSession(); if(!s)return null;
+  if(s.user)return s.user;
+  try{return await sbFetch("/auth/v1/user");}catch(e){return null;}
+}
+
+function sessaoLocalValida(){
+  const s=authSession();
+  return !!(s&&s.user&&s.user.id);
+}
+async function exigirConta(acao){
+  const user=await authUser();
+  if(user)return user;
+  const offline=!navigator.onLine;
+  abrir(`<h2>Entre na sua conta</h2>
+    <div class="meta">${offline
+      ?"Este aparelho ainda não possui uma sessão autenticada salva. Conecte-se à internet para entrar pela primeira vez."
+      :"Para usar o Gestão do Rebanho, entre ou crie sua conta."}</div>
+    ${acao?`<div class="meta" style="margin-top:8px">Ação: <b>${esc(acao)}</b></div>`:""}
+    <button class="btn" style="margin-top:16px" onclick="fechar();formLoginCloud()">Entrar / criar conta</button>
+    <button class="btn-fant" onclick="fechar()">Cancelar</button>`);
+  return null;
+}
+async function podeUsarApp(acao){
+  return !!(await exigirConta(acao));
+}
+
+const DB="rebanho_v2";
+const DB_VERSION=9;
+const SYNC_SCHEMA_VERSION=4;
+const DATA_STORES=["propriedades","marcas","lotes","animais","eventos","medicamentos","perfil","pastos","avisos","lancamentos","grupos","grupo_animais"];
+const SYNC_STORES=["propriedades","marcas","lotes","animais","eventos","medicamentos","pastos","avisos","lancamentos","grupos","grupo_animais"];
+let _syncRunning=false,_syncTimer=null,_syncLastError="",_syncLastResult=null;
+let db;
+
+const agoraISO=()=>new Date().toISOString();
+const isoLegado=o=>{
+  const ts=o&&(o.criadoEm||o.feitoEm);
+  if(typeof ts==="number"&&Number.isFinite(ts))return new Date(ts).toISOString();
+  return agoraISO();
+};
+
+function abrirDB(){return new Promise((ok,er)=>{const r=indexedDB.open(DB,DB_VERSION);
+  r.onupgradeneeded=e=>{
+    const d=e.target.result, t=e.target.transaction;
     const criar=n=>{if(!d.objectStoreNames.contains(n))d.createObjectStore(n,{keyPath:"id"});};
-    criar("propriedades"); criar("marcas"); criar("lotes");
-    criar("animais"); criar("eventos"); criar("medicamentos"); criar("perfil"); criar("pastos");
-    criar("avisos"); criar("lancamentos");
+    DATA_STORES.forEach(criar);
+    criar("sync_meta");
+
+    // Migra registros antigos sem alterar os dados funcionais do usuário.
+    // Todos ficam pendentes de criação para que, no futuro, possam ser enviados
+    // ao primeiro backend configurado sem perder registros já existentes.
+    for(const nome of DATA_STORES){
+      const st=t.objectStore(nome);
+      const req=st.openCursor();
+      req.onsuccess=ev=>{
+        const c=ev.target.result;
+        if(!c)return;
+        const o=c.value, base=o.created_at||isoLegado(o);
+        let mudou=false;
+        if(!o.created_at){o.created_at=base;mudou=true;}
+        if(!o.updated_at){o.updated_at=base;mudou=true;}
+        if(o.deleted_at===undefined){o.deleted_at=null;mudou=true;}
+        if(!o.sync_status){o.sync_status="pending_create";mudou=true;}
+        if(!Number.isFinite(o.sync_version)){o.sync_version=1;mudou=true;}
+        if(mudou)c.update(o);
+        c.continue();
+      };
+    }
   };
-  r.onsuccess=e=>{db=e.target.result;ok();}; r.onerror=er;});}
+  r.onsuccess=async e=>{
+    db=e.target.result;
+    await garantirSyncMeta();
+    ok();
+  };
+  r.onerror=er;
+});}
+
 function tx(s,m="readonly"){return db.transaction(s,m).objectStore(s);}
-function getAll(s){return new Promise(ok=>{const r=tx(s).getAll();r.onsuccess=()=>ok(r.result);});}
-function get(s,id){return new Promise(ok=>{const r=tx(s).get(id);r.onsuccess=()=>ok(r.result);});}
-function put(s,o){return new Promise(ok=>{const r=tx(s,"readwrite").put(o);r.onsuccess=()=>ok(o);});}
-function del(s,id){return new Promise(ok=>{const r=tx(s,"readwrite").delete(id);r.onsuccess=()=>ok();});}
+function getAllRaw(s){return new Promise((ok,er)=>{const r=tx(s).getAll();r.onsuccess=()=>ok(r.result||[]);r.onerror=()=>er(r.error);});}
+function getRaw(s,id){return new Promise((ok,er)=>{const r=tx(s).get(id);r.onsuccess=()=>ok(r.result);r.onerror=()=>er(r.error);});}
+function putRaw(s,o){return new Promise((ok,er)=>{const r=tx(s,"readwrite").put(o);r.onsuccess=()=>ok(o);r.onerror=()=>er(r.error);});}
+function hardDel(s,id){return new Promise((ok,er)=>{const r=tx(s,"readwrite").delete(id);r.onsuccess=()=>ok();r.onerror=()=>er(r.error);});}
+
+async function activeOrgIdLocal(){
+  try{const m=await getRaw("sync_meta","device");return m&&m.active_org_id||null;}catch(e){return null;}
+}
+async function getAll(s){
+  const arr=await getAllRaw(s);
+  const ativos=arr.filter(o=>!o.deleted_at);
+  if(!SYNC_STORES.includes(s))return ativos;
+  const org=await activeOrgIdLocal();
+  if(!org)return ativos;
+  return ativos.filter(o=>!o.organization_id||o.organization_id===org);
+}
+async function get(s,id){
+  const o=await getRaw(s,id);
+  if(!o||o.deleted_at)return undefined;
+  if(SYNC_STORES.includes(s)){
+    const org=await activeOrgIdLocal();
+    if(org&&o.organization_id&&o.organization_id!==org)return undefined;
+  }
+  return o;
+}
+function agendarSync(ms=1800){
+  if(!navigator.onLine||!authSession())return;
+  clearTimeout(_syncTimer);
+  _syncTimer=setTimeout(()=>sincronizarAgora({silencioso:true}),ms);
+}
+async function put(s,o){
+  const agora=agoraISO();
+  if(!o.created_at)o.created_at=agora;
+  o.updated_at=agora;
+  if(o.deleted_at===undefined)o.deleted_at=null;
+  o.sync_version=(Number.isFinite(o.sync_version)?o.sync_version:0)+1;
+  if(!o.sync_status)o.sync_status="pending_create";
+  else if(o.sync_status==="synced")o.sync_status="pending_update";
+  if(SYNC_STORES.includes(s)){
+    const org=await activeOrgIdLocal();
+    if(org&&!o.organization_id)o.organization_id=org;
+  }
+  const r=await putRaw(s,o);
+  if(SYNC_STORES.includes(s))agendarSync();
+  return r;
+}
+async function del(s,id){
+  const o=await getRaw(s,id);
+  if(!o)return;
+  const agora=agoraISO();
+  if(!o.created_at)o.created_at=agora;
+  o.updated_at=agora;
+  o.deleted_at=agora;
+  o.sync_status="pending_delete";
+  o.sync_version=(Number.isFinite(o.sync_version)?o.sync_version:0)+1;
+  if(SYNC_STORES.includes(s)){
+    const org=await activeOrgIdLocal();
+    if(org&&!o.organization_id)o.organization_id=org;
+  }
+  const r=await putRaw(s,o);
+  if(SYNC_STORES.includes(s))agendarSync();
+  return r;
+}
+async function garantirSyncMeta(){
+  let m=await getRaw("sync_meta","device");
+  if(!m){
+    m={id:"device",device_id:crypto.randomUUID?crypto.randomUUID():("dev-"+Date.now()+"-"+Math.random()),
+      schema_version:SYNC_SCHEMA_VERSION,last_sync_at:null,last_server_sync_at:null,active_org_id:null,active_user_id:null,
+      legacy_claimed_org_id:null,criado_em:agoraISO()};
+    await putRaw("sync_meta",m);
+  }else{
+    let mudou=false;
+    if(m.schema_version!==SYNC_SCHEMA_VERSION){m.schema_version=SYNC_SCHEMA_VERSION;mudou=true;}
+    if(m.active_org_id===undefined){m.active_org_id=null;mudou=true;}
+    if(m.active_user_id===undefined){m.active_user_id=null;mudou=true;}
+    if(m.last_server_sync_at===undefined){m.last_server_sync_at=null;mudou=true;}
+    if(m.legacy_claimed_org_id===undefined){m.legacy_claimed_org_id=null;mudou=true;}
+    if(mudou)await putRaw("sync_meta",m);
+  }
+  return m;
+}
 const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random();
 const codAnimal=a=>"#"+String((a&&a.codigo)||0).padStart(3,'0');
 const rotulo=a=>(a&&(a.brinco||a.nome))||codAnimal(a);
+const normalizarBrinco=b=>(b||"").trim().toLocaleLowerCase('pt-BR');
+async function brincoEmUso(brinco,ignorarAnimalId=null){
+  const chave=normalizarBrinco(brinco);
+  if(!chave)return false; // brinco continua opcional; vazio não é duplicidade
+  const animais=await getAll("animais");
+  return animais.some(a=>a.id!==ignorarAnimalId&&normalizarBrinco(a.brinco)===chave);
+}
 async function proximoCodigo(){const as=await getAll("animais");return as.reduce((m,a)=>Math.max(m,a.codigo||0),0)+1;}
 const numBR=id=>{let v=val(id);if(!v)return null;if(v.includes(','))v=v.replace(/\./g,'').replace(',','.');const n=parseFloat(v);return isNaN(n)?null:n;};
 const moeda=n=>n==null?"—":n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
@@ -285,9 +556,9 @@ const COW=`<svg class="cattle" viewBox="0 0 640 512" xmlns="http://www.w3.org/20
 
 /* Carrega tudo de uma vez e monta em memória */
 async function tudo(){
-  const [propriedades,marcas,lotes,animais,eventos,medicamentos,pastos]=await Promise.all(
-    ["propriedades","marcas","lotes","animais","eventos","medicamentos","pastos"].map(getAll));
-  return {propriedades,marcas,lotes,animais,eventos,medicamentos,pastos};
+  const [propriedades,marcas,lotes,animais,eventos,medicamentos,pastos,grupos,grupo_animais]=await Promise.all(
+    ["propriedades","marcas","lotes","animais","eventos","medicamentos","pastos","grupos","grupo_animais"].map(getAll));
+  return {propriedades,marcas,lotes,animais,eventos,medicamentos,pastos,grupos,grupo_animais};
 }
 const propDoAnimal=(a,lotes)=>{const l=lotes.find(x=>x.id===a.loteAtualId);return l?l.propriedadeId:null;};
 
@@ -316,20 +587,183 @@ async function moverAnimal(id,novoLote){
 }
 
 /* ======================= NAV ======================= */
-const $t=document.getElementById("tela"); let aba="painel"; let _perfilFoto=""; let _animalFoto=""; let _editPastos=false; let _editNasc=false; let _finAno=null; let _finProp=""; let _finFiltro="todos"; let _lembreteOculto=false;
+const $t=document.getElementById("tela"); let aba="inicio"; let _perfilFoto=""; let _animalFoto=""; let _editPastos=false; let _editNasc=false; let _finAno=null; let _finProp=""; let _finFiltro="todos"; let _lembreteOculto=false;
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
   aba=b.dataset.aba;
   document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("ativo",x===b));
-  render();
+  renderSeguro();
 });
 function topoPagina(){/* a rolagem pro topo agora acontece quando a nova tela aparece (ver listener abaixo) */}
 // Ao inserir a nova tela, o fade dispara 'animationstart' -> rolamos pro topo já com o conteúdo novo
 document.getElementById("tela").addEventListener("animationstart",e=>{
   if(e.animationName==="telaIn")window.scrollTo({top:0,left:0,behavior:"auto"});
 });
-function irAba(a){aba=a;document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("ativo",x.dataset.aba===a));render();}
-function render(){topoPagina();({painel:telaPainel,lotes:telaLotes,animais:telaAnimais,perfil:telaPerfil}[aba])();}
-function voltar(){render();}
+function irAba(a){aba=a;document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("ativo",x.dataset.aba===a));renderSeguro();}
+async function render(){
+  topoPagina();
+  $t.dataset.syncScreen="";
+  const user=await authUser();
+  if(!user){document.body.classList.add("deslogado");return telaBloqueada();}
+  document.body.classList.remove("deslogado");
+  if(aba==="perfil")return telaPerfil();
+  if(aba==="financeiro")return menuFinanceiro();
+  return ({inicio:telaInicio,painel:telaPainel,lotes:telaLotes,animais:telaAnimais}[aba]||telaInicio)();
+}
+async function renderSeguro(){
+  try{
+    return await render();
+  }catch(e){
+    console.error("Falha ao renderizar a tela:",e);
+    $t.innerHTML=`<div style="padding-top:18px">
+      <div class="card">
+        <div class="ti" style="color:var(--verde-esc)">Não foi possível carregar esta tela</div>
+        <div class="meta" style="margin-top:8px">Seus dados locais continuam preservados. Tente carregar novamente.</div>
+        <button class="btn" style="margin-top:16px" onclick="renderSeguro()">Tentar novamente</button>
+      </div>
+    </div>`;
+  }
+}
+async function telaBloqueada(){
+  topoPagina();
+  document.body.classList.add("deslogado");
+  $t.innerHTML=`<div style="min-height:calc(100vh - 40px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 18px">
+    <div style="width:96px;height:96px;border-radius:26px;background:var(--verde-lite);display:flex;align-items:center;justify-content:center;margin-bottom:18px;overflow:hidden">
+      <img src="boi.png" alt="" style="width:78px;height:78px;object-fit:contain">
+    </div>
+    <div style="font-size:26px;font-weight:800;color:var(--verde-esc)">Gestão do Rebanho</div>
+    <div class="meta" style="margin:10px auto 26px;max-width:360px;line-height:1.5">
+      Entre com sua conta para acessar o rebanho. Seus dados ficam vinculados ao seu login e podem ser usados em mais de um aparelho.
+    </div>
+    <button class="btn" style="max-width:360px;margin:0 auto" onclick="formLoginCloud()">Entrar / criar conta</button>
+    <div class="cloud-note" style="margin-top:16px;max-width:360px">Depois do primeiro login, o app continua funcionando offline neste aparelho.</div>
+  </div>`;
+}
+function voltar(){renderSeguro();}
+
+/* ======================= INÍCIO ======================= */
+function homeMoney(v){
+  return moeda(Number(v)||0);
+}
+async function telaInicio(){
+  topoPagina();
+  const {propriedades,lotes,animais,pastos}=await tudo();
+  const ativos=animais.filter(a=>a.status==="Ativo");
+  const ano=String(new Date().getFullYear());
+  const lancs=(await getAll("lancamentos")).filter(l=>(l.data||"").slice(0,4)===ano);
+  const receita=lancs.filter(l=>l.tipo==="receita").reduce((s,l)=>s+(l.valor||0),0);
+  const cpv=lancs.filter(l=>l.tipo==="receita").reduce((s,l)=>s+(l.custo||0),0);
+  const despesas=lancs.filter(l=>l.tipo==="despesa").reduce((s,l)=>s+(l.valor||0),0);
+  const resultado=receita-cpv-despesas;
+  const aReceber=lancs.filter(l=>l.tipo==="receita"&&!l.pago).reduce((s,l)=>s+(l.valor||0),0);
+  const aPagar=lancs.filter(l=>l.tipo==="despesa"&&!l.pago).reduce((s,l)=>s+(l.valor||0),0);
+
+  // Nome do usuário
+  const user=await authUser();
+  let perfilLocal=null; try{perfilLocal=await getRaw("perfil","perfil");}catch(_){}
+  const nomeCompleto=(user&&user.user_metadata&&user.user_metadata.full_name)
+    ||(perfilLocal&&perfilLocal.nome)
+    ||(user&&user.email?user.email.split("@")[0]:"produtor(a)");
+  const primeiroNome=String(nomeCompleto).trim().split(/\s+/)[0]||"produtor(a)";
+
+  // Avisos importantes
+  const hojeTs=dataParaTs(hoje());
+  const iconeAviso=(typeof ICONE_AVISO!=="undefined"&&ICONE_AVISO)||{};
+  // 1) desmamas que passaram do prazo (210 dias)
+  const desmAtras=animais.filter(a=>a.nascidoNaPropriedade===true&&!a.desmamado&&a.dataNascimento)
+    .map(a=>({a,d:DIAS_DESMAMA-diasEntre(dataParaTs(a.dataNascimento),Date.now())}))
+    .filter(x=>x.d<0).sort((x,y)=>x.d-y.d);
+  // 2) eventos futuros agendados (avisos ainda não concluídos, de hoje em diante)
+  const eventosFut=(await getAll("avisos")).filter(a=>!a.feito&&a.data&&dataParaTs(a.data)>=hojeTs)
+    .sort((x,y)=>(x.data||"").localeCompare(y.data||""));
+  // 3) pastos há mais de 3 meses no mesmo estado (ocupado ou reservado)
+  const pastos3m=(pastos||[]).filter(p=>(p.status==="Ocupado"||p.status==="Descanso")&&diasEntre(p.statusDesde||p.criadoEm,Date.now())>90)
+    .map(p=>({p,d:diasEntre(p.statusDesde||p.criadoEm,Date.now())})).sort((x,y)=>y.d-x.d);
+
+  const itensAviso=[];
+  desmAtras.forEach(x=>itensAviso.push(`<div class="card rt" onclick="verAnimal('${x.a.id}')" style="border-left:4px solid #c0392b">
+    <div class="ti" style="font-size:15px">🍼 Desmama atrasada — ${esc(rotulo(x.a))} ${codAnimal(x.a)}</div>
+    <div class="meta" style="color:#c0392b;font-weight:600">Passou ${-x.d} dia(s) do prazo de 210 dias</div></div>`));
+  eventosFut.forEach(a=>{const dd=Math.round((dataParaTs(a.data)-hojeTs)/86400000);
+    const quando=dd===0?"hoje":(dd===1?"amanhã":`em ${dd} dias`);
+    itensAviso.push(`<div class="card rt" onclick="telaAvisos()" style="border-left:4px solid #e0a800">
+      <div class="ti" style="font-size:15px">${iconeAviso[a.tipo]||"🔔"} ${esc(a.tipo||"Evento")} — ${quando}</div>
+      ${a.detalhe?`<div class="meta">${esc(a.detalhe)}</div>`:""}
+      <div class="meta">📅 ${fmt(a.data)}</div></div>`);});
+  pastos3m.forEach(x=>{const meses=Math.floor(x.d/30);
+    itensAviso.push(`<div class="card rt" onclick="verPasto('${x.p.id}')" style="border-left:4px solid #e0a800">
+      <div class="ti" style="font-size:15px">🌱 ${esc(x.p.nome)} — ${x.p.status==="Ocupado"?"ocupado":"reservado"} há ${x.d} dias</div>
+      <div class="meta">Mais de 3 meses no mesmo estado (${meses} ${meses===1?"mês":"meses"})</div></div>`);});
+
+  const blocoAvisos=itensAviso.length
+    ? `<div class="h3" style="margin-top:4px">🔔 Avisos importantes</div>${itensAviso.join("")}`
+    : `<div class="card" style="border-left:4px solid var(--verde)"><div class="ti" style="font-size:15px;color:var(--verde-esc)">✅ Tudo em dia</div><div class="meta" style="margin-top:4px">Sem desmamas atrasadas, eventos agendados ou pastos há mais de 3 meses no mesmo estado.</div></div>`;
+
+  $t.innerHTML=`
+    <div class="home-greet">
+      <h2>Olá, ${esc(primeiroNome)}.</h2>
+      <div class="hg-sub">Seja bem-vindo(a) 👋</div>
+    </div>
+
+    ${blocoAvisos}
+
+    <div class="home-module" onclick="abrirOperacional()">
+      <div class="home-module-head">
+        <div class="home-module-icon"><img src="boi.png" alt=""></div>
+        <div>
+          <div class="hm-title">Gestão Operacional</div>
+          <div class="hm-sub">Propriedades, lotes, animais, manejo e pastos.</div>
+        </div>
+        <div class="hm-chev">›</div>
+      </div>
+      <div class="home-stats">
+        <div class="home-stat"><div class="hs-label">🐄 Animais</div><div class="hs-value">${ativos.length}</div></div>
+        <div class="home-stat"><div class="hs-label">🏡 Propriedades</div><div class="hs-value">${propriedades.length}</div></div>
+        <div class="home-stat"><div class="hs-label">▤ Lotes</div><div class="hs-value">${lotes.length}</div></div>
+      </div>
+    </div>
+
+    <div class="home-module" onclick="menuFinanceiro()">
+      <div class="home-module-head">
+        <div class="home-module-icon">💰</div>
+        <div>
+          <div class="hm-title">Gestão Financeira</div>
+          <div class="hm-sub">Lançamentos, relatórios, contas e resultados.</div>
+        </div>
+        <div class="hm-chev">›</div>
+      </div>
+      <div class="home-stats">
+        <div class="home-stat"><div class="hs-label">Resultado ${ano}</div><div class="hs-value">${homeMoney(resultado)}</div></div>
+        <div class="home-stat"><div class="hs-label">↓ A receber</div><div class="hs-value">${homeMoney(aReceber)}</div></div>
+        <div class="home-stat neg"><div class="hs-label">↗ A pagar</div><div class="hs-value">${homeMoney(aPagar)}</div></div>
+      </div>
+    </div>
+
+    <div class="home-hint">
+      <div class="hi-icon">i</div>
+      <div>
+        <b>Escolha a área que deseja acessar</b>
+        <div class="meta">Toque em um módulo para entrar ou use o menu lateral para alternar entre as áreas.</div>
+      </div>
+    </div>`;
+}
+function marcarNav(a){
+  document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("ativo",x.dataset.aba===a));
+}
+function abrirOperacional(){
+  aba="painel";
+  marcarNav("painel");
+  telaPainel();
+}
+function abrirLotesOperacional(){
+  aba="painel";
+  marcarNav("painel");
+  telaLotes();
+}
+function abrirAnimaisOperacional(){
+  aba="painel";
+  marcarNav("painel");
+  telaAnimais();
+}
 
 /* ======================= PAINEL (dashboard) ======================= */
 async function telaPainel(){
@@ -393,6 +827,7 @@ async function telaPainel(){
   }
 
   $t.innerHTML=`
+    <button class="voltar" onclick="irAba('inicio')">‹ Início</button>
     ${lembrete}
     <div class="hero">
       <div class="cabeca"><div class="tile"><img src="boi.png" alt="boi"></div><div class="rot">Total do Rebanho</div></div>
@@ -405,10 +840,12 @@ async function telaPainel(){
 
     <div class="sechead" style="margin-top:22px"><span class="sic">▦</span><h2>Módulos do sistema</h2></div>
     <div class="grid">
-      ${mod('<img src="bezerro.png" alt="">',"Nascimento de Bezerro","Bezerros nascidos, mãe e data.","telaNascimentos()")}
+      ${mod('<img src="bezerro.png" alt="">',"Nascimento de Bezerros","Bezerros nascidos, mãe e data.","telaNascimentos()")}
+      ${mod('<img src="boi.png" alt="">',"Animais","Cadastro, consulta e histórico individual.","abrirAnimaisOperacional()")}
+      ${mod("▤","Lotes","Organização dos animais por lote.","abrirLotesOperacional()")}
       ${mod("☑","Eventos de Manejo","Marcar, medicar ou trocar de lote.","telaManejo()")}
-      ${mod("🌱","Gestão do Pasto","Pastos, capim, área e situação.","telaGestaoPasto()")}
-      ${mod("🔔","Avisos","Backup, pastos em descanso e alertas.","telaAvisos()")}
+      ${mod("🌱","Gestão de Pastos","Pastos, capim, área e situação.","telaGestaoPasto()")}
+      ${mod("🔔","Avisos","Eventos, manejos e alertas que exigem atenção.","telaAvisos()")}
     </div>
 `;
 }
@@ -492,7 +929,7 @@ async function telaNascimentos(){
       ${linhaDesmama}${ctrlDesmama}</div>`;
   });
   let lst=nascidos.length?verMais(nascItens,"bezerro(s)"):`<div class="vazio"><div class="big">🍼</div><b>Nenhum nascimento registrado</b><div class="meta">Toque em "Registrar nascimento" para incluir o primeiro bezerro.</div></div>`;
-  $t.innerHTML=`<button class="voltar" onclick="_editNasc=false;irAba('painel')">‹ Painel</button>
+  $t.innerHTML=`<button class="voltar" onclick="_editNasc=false;irAba('painel')">‹ Gestão Operacional</button>
     <div class="sechead"><span class="sic">🍼</span><h2>Nascimentos</h2></div>
     <button class="btn" onclick="formNovoAnimal(null,true)">+ Registrar nascimento</button>
     <button class="btn btn-sec" onclick="formDesmama()">🍼 Registrar desmama</button>
@@ -551,6 +988,7 @@ async function desfazerDesmama(animalId){
 }
 
 async function telaGestaoPasto(){
+  if(!(await podeUsarApp("Acessar gestão do pasto")))return;
   topoPagina();
   const {propriedades,lotes,animais,pastos}=await tudo();
   const nomeLote=id=>(lotes.find(l=>l.id===id)||{}).nome||"—";
@@ -578,7 +1016,7 @@ async function telaGestaoPasto(){
   const orfaos=pastos.filter(pt=>!propriedades.find(pr=>pr.id===pt.propriedadeId));
   if(orfaos.length)lst+=`<div class="h3">Sem propriedade</div>`+orfaos.map(cardPasto).join("");
   if(!pastos.length)lst=`<div class="vazio"><div class="big">🌱</div><b>Nenhum pasto cadastrado</b><div class="meta">Toque em "Novo pasto" para começar.</div></div>`;
-  $t.innerHTML=`<button class="voltar" onclick="_editPastos=false;irAba('painel')">‹ Painel</button>
+  $t.innerHTML=`<button class="voltar" onclick="_editPastos=false;irAba('painel')">‹ Gestão Operacional</button>
     <div class="sechead"><span class="sic">🌱</span><h2>Gestão do Pasto</h2></div>
     <div class="lado"><button class="btn" onclick="formNovoPasto()">+ Novo pasto</button>
       ${pastos.length?`<button class="btn btn-sec" onclick="_editPastos=!_editPastos;telaGestaoPasto()">${_editPastos?"✓ Concluir":"✎ Editar"}</button>`:""}</div>
@@ -705,30 +1143,26 @@ async function excluirPeriodoPasto(pastoId,ref){
 async function telaAvisos(){
   topoPagina();
   const {propriedades,pastos,animais}=await tudo();
-  const cfg=await getConfig(); const dias=diasDesde(cfg.ultimoBackup); const freq=cfg.lembreteDias||7;
   const nomeProp=id=>(propriedades.find(p=>p.id===id)||{}).nome||"";
-  const backupCard=(dias===null||dias>=freq)
-    ? `<div class="card" style="border-left:4px solid #e0a800;background:#fffdf5"><b>☁️ Backup pendente</b>
-        <div class="meta" style="margin:4px 0 10px">${dias===null?"Você ainda não salvou nenhum backup.":`Último backup há ${dias} dia(s).`}</div>
-        <button class="btn" style="margin:0" onclick="salvarNuvem()">Salvar backup agora</button></div>`
-    : `<div class="card" style="border-left:4px solid var(--verde)"><b>✅ Backup em dia</b><div class="meta" style="margin-top:4px">Último backup há ${dias} dia(s).</div></div>`;
-  const bloco=(arr,titulo,vazio)=>`<div class="h3">${titulo}</div>`+(arr.length
-    ? arr.map(p=>`<div class="card"><div class="ti" style="font-size:15px">${esc(p.nome)}</div><div class="meta">${esc(nomeProp(p.propriedadeId))}</div></div>`).join("")
-    : `<div class="meta" style="padding:2px 4px 4px">${vazio}</div>`);
+  // Na tela de Avisos, só exibimos categorias que realmente possuem itens.
+  // Backup pertence à área de Perfil/Conta e não deve aparecer aqui.
+  const bloco=(arr,titulo)=>arr.length
+    ? `<div class="h3">${titulo}</div>`+arr.map(p=>`<div class="card"><div class="ti" style="font-size:15px">${esc(p.nome)}</div><div class="meta">${esc(nomeProp(p.propriedadeId))}</div></div>`).join("")
+    : "";
   const descanso=pastos.filter(p=>p.status==="Descanso");
   const livres=pastos.filter(p=>p.status==="Livre");
   // desmama: bezerros não desmamados, faltando até 30 dias ou já atrasados
   const desmamaProx=animais.filter(a=>a.nascidoNaPropriedade===true&&!a.desmamado&&a.dataNascimento)
     .map(a=>({a,d:DIAS_DESMAMA-diasEntre(dataParaTs(a.dataNascimento),Date.now())}))
     .filter(x=>x.d<=30).sort((x,y)=>x.d-y.d);
-  const blocoDesmama=`<div class="h3">🍼 Desmama próxima (até 30 dias)</div>`+(desmamaProx.length
-    ? desmamaProx.map(x=>{
+  const blocoDesmama=desmamaProx.length
+    ? `<div class="h3">🍼 Desmama próxima (até 30 dias)</div>`+desmamaProx.map(x=>{
         const txt=x.d>0?`faltam ${x.d} dia(s)`:(x.d===0?"é hoje!":`atrasada há ${-x.d} dia(s)`);
         const cor=x.d<=0?"#c0392b":"var(--muted)";
         return `<div class="card rt" onclick="formDesmama('${x.a.id}')"><div class="ti" style="font-size:15px">${esc(rotulo(x.a))} ${codAnimal(x.a)}</div>
           <div class="meta" style="color:${cor}">🍼 Desmama ${txt} · nasc. ${fmt(x.a.dataNascimento)}</div></div>`;
       }).join("")
-    : `<div class="meta" style="padding:2px 4px 4px">Nenhuma desmama nos próximos 30 dias.</div>`);
+    : "";
   // avisos personalizados (eventos futuros criados pelo usuário)
   const avisosCustom=(await getAll("avisos")).filter(a=>!a.feito)
     .sort((x,y)=>(x.data||"").localeCompare(y.data||"")||(x.hora||"").localeCompare(y.hora||""));
@@ -744,21 +1178,20 @@ async function telaAvisos(){
       <div class="meta" style="color:${cor};font-weight:600">📅 ${fmt(a.data)}${a.hora?` · ${esc(a.hora)}`:""}${quando?` · ${quando}`:""}</div>
       <button class="btn-fant" style="padding:6px 0 0;color:var(--verde);font-weight:600" onclick="marcarAvisoFeito('${a.id}')">✓ Marcar como concluído</button></div>`;
   });
-  const blocoEventos=`<div class="h3">📌 Próximos eventos</div>`+(itensAviso.length
-    ? verMais(itensAviso,"evento(s)")
-    : `<div class="meta" style="padding:2px 4px 4px">Nenhum evento cadastrado. Toque em "+ Cadastrar aviso".</div>`);
+  const blocoEventos=itensAviso.length
+    ? `<div class="h3">📌 Próximos eventos</div>`+verMais(itensAviso,"evento(s)")
+    : "";
   const podeNotif=("Notification" in window);
   const btnNotif=(podeNotif&&Notification.permission!=="granted")
     ? `<button class="btn btn-sec" onclick="ativarNotificacoes()">🔔 Ativar lembretes no celular</button>` : "";
-  $t.innerHTML=`<button class="voltar" onclick="irAba('painel')">‹ Painel</button>
+  $t.innerHTML=`<button class="voltar" onclick="irAba('painel')">‹ Gestão Operacional</button>
     <div class="sechead"><span class="sic">🔔</span><h2>Avisos</h2></div>
     <button class="btn" onclick="formNovoAviso()">+ Cadastrar aviso</button>
     ${btnNotif}
-    ${backupCard}
     ${blocoEventos}
     ${blocoDesmama}
-    ${bloco(descanso,"🌿 Pastos em descanso","Nenhum pasto em descanso.")}
-    ${bloco(livres,"⬜ Pastos livres","Nenhum pasto livre.")}`;
+    ${bloco(descanso,"🌿 Pastos em descanso")}
+    ${bloco(livres,"⬜ Pastos livres")}`;
 }
 /* ---------- Avisos personalizados ---------- */
 async function formNovoAviso(aviso){
@@ -825,7 +1258,7 @@ async function verPropriedade(pid){
     <div class="ti">${esc(pt.nome)}</div>
     <div class="meta" style="margin-top:2px">${[pt.areaHa!=null?pt.areaHa+" ha":"",pt.tipoCapim].filter(Boolean).map(esc).join(" · ")||"—"}</div>
     <div class="meta" style="margin-top:6px">${pastoStatusChip(pt)}${pt.status==="Ocupado"&&pt.loteId?`<span class="chip chip-lote">▦ ${esc(nomeLote(pt.loteId))}</span>`:""}</div></div>`;
-  $t.innerHTML=`<button class="voltar" onclick="irAba('painel')">‹ Painel</button>
+  $t.innerHTML=`<button class="voltar" onclick="irAba('painel')">‹ Gestão Operacional</button>
     <div class="card">
       <div style="display:flex;align-items:center;gap:14px">
         <div class="prop-foto-wrap" onclick="document.getElementById('prop_foto_${pid}').click()">
@@ -858,7 +1291,9 @@ async function telaLotes(){
   topoPagina();
   const {propriedades,lotes,animais}=await tudo();
   const conta=id=>animais.filter(a=>a.loteAtualId===id&&a.status==="Ativo").length;
-  let html=`<button class="btn" onclick="formNovoLote()">+ Novo lote</button>`;
+  let html=`<button class="voltar" onclick="irAba('painel')">‹ Gestão Operacional</button>
+    <button class="btn" onclick="formNovoLote()">+ Novo lote</button>
+    <button class="btn btn-sec" onclick="telaGrupos()">👥 Grupos de animais</button>`;
   if(lotes.length===0){html+=`<div class="vazio"><div class="big">▤</div><b>Nenhum lote</b><div class="meta">Crie um lote para organizar o rebanho.</div></div>`;}
   else{
     for(const p of propriedades){
@@ -897,58 +1332,117 @@ async function verLote(id){
 let _dadosAnimais=null;
 async function telaAnimais(){
   topoPagina();
-  const {propriedades,lotes,animais,marcas,medicamentos}=await tudo();
+  const {propriedades,lotes,animais,marcas,medicamentos,pastos,grupos,grupo_animais}=await tudo();
   const eventos=await getAll("eventos");
   const nomeLote=id=>(lotes.find(l=>l.id===id)||{}).nome||"—";
   const marcaSigla=id=>{const m=marcas.find(x=>x.id===id);return m?(m.sigla||m.nome||""):"";};
   // conjunto de medicamentos aplicados a cada animal
   const medPorAnimal={};
   for(const e of eventos){if(e.tipo==="Medicamento"&&e.medicamentoId){(medPorAnimal[e.animalId]=medPorAnimal[e.animalId]||new Set()).add(e.medicamentoId);}}
-  _dadosAnimais={animais,nomeLote,marcaSigla,medPorAnimal};
+  // grupos podem conter o mesmo animal simultaneamente
+  const gruposPorAnimal={};
+  for(const v of grupo_animais){(gruposPorAnimal[v.animalId]=gruposPorAnimal[v.animalId]||new Set()).add(v.grupoId);}
+  // pasto atual é inferido pelo lote que está ocupando o pasto
+  const pastosPorLote={};
+  for(const pt of pastos){if(pt.loteId){(pastosPorLote[pt.loteId]=pastosPorLote[pt.loteId]||new Set()).add(pt.id);}}
+  _dadosAnimais={animais,nomeLote,marcaSigla,medPorAnimal,gruposPorAnimal,pastosPorLote,marcas,medicamentos,lotes,pastos,grupos};
 
-  let html=`<button class="btn" onclick="formNovoAnimal()">+ Novo animal</button>`;
+  let html=`<button class="voltar" onclick="irAba('painel')">‹ Gestão Operacional</button>
+    <button class="btn" onclick="formNovoAnimal()">+ Novo animal</button>`;
   if(lotes.length===0){html+=`<div class="vazio"><div class="big">🐄</div><b>Crie um lote primeiro</b><div class="meta">Todo animal pertence a um lote.</div></div>`;return void($t.innerHTML=html);}
   if(animais.length===0){html+=`<div class="vazio"><div class="big">🐄</div><b>Nenhum animal</b><div class="meta">Cadastre um animal ou registre um nascimento.</div></div>`;return void($t.innerHTML=html);}
-  const optMarca=`<option value="">Marca / dono: todos</option>`+marcas.map(m=>`<option value="${m.id}">Marca: ${esc(m.sigla||m.nome)}</option>`).join("")+`<option value="__sem">Sem marca</option>`;
-  const optMed=`<option value="">Medicação: qualquer</option>`+medicamentos.map(m=>`<option value="${m.id}">Tomou: ${esc(m.nome)}</option>`).join("");
-  const optNasc=`<option value="">Nascimento: qualquer</option><option value="5">Nasceu nos últimos 5 meses</option><option value="7">Nasceu nos últimos 7 meses</option><option value="12">Nasceu nos últimos 12 meses</option>`;
   html+=`<input id="busca" placeholder="Buscar por brinco, nome ou nº…" oninput="filtrarAnimais()" style="margin-bottom:10px">
     <div class="filtros-animais">
-      <select id="f_marca" onchange="filtrarAnimais()">${optMarca}</select>
-      <select id="f_med" onchange="filtrarAnimais()">${optMed}</select>
-      <select id="f_nasc" onchange="filtrarAnimais()">${optNasc}</select>
+      <select id="f_tipo" onchange="atualizarCriterioFiltroAnimais()">
+        <option value="">Escolher tipo de filtro</option>
+        <option value="marca">Marca / dono</option>
+        <option value="med">Medicação</option>
+        <option value="nasc">Nascimento</option>
+        <option value="grupo">Grupo</option>
+        <option value="pasto">Pasto</option>
+        <option value="lote">Lote</option>
+        <option value="sexo">Sexo</option>
+        <option value="status">Situação do animal</option>
+      </select>
+      <select id="f_criterio" onchange="filtrarAnimais()" disabled>
+        <option value="">Primeiro escolha o tipo de filtro</option>
+      </select>
     </div>
     <div class="row" style="margin:0 4px 8px"><span id="animais_count" class="meta"></span>
-      <button class="btn-fant" style="padding:2px 6px;color:var(--verde)" onclick="limparFiltrosAnimais()">Limpar filtros</button></div>
+      <button id="limpar_filtros_animais" class="btn-fant" style="padding:2px 6px;color:var(--verde);display:none" onclick="limparFiltrosAnimais()">Limpar filtro</button></div>
     <div id="lista"></div>`;
   $t.innerHTML=html;
   filtrarAnimais();
 }
+function atualizarCriterioFiltroAnimais(){
+  if(!_dadosAnimais)return;
+  const tipo=(document.getElementById("f_tipo")||{}).value||"";
+  const c=document.getElementById("f_criterio");if(!c)return;
+  const {marcas,medicamentos,lotes,pastos,grupos}=_dadosAnimais;
+  let opts=[];
+  if(tipo==="marca"){
+    opts=marcas.map(m=>[m.id,(m.sigla?m.sigla+" · ":"")+(m.nome||m.sigla||"Marca")]);
+    opts.push(["__sem","Sem marca / dono"]);
+  }else if(tipo==="med"){
+    opts=medicamentos.map(m=>[m.id,m.nome||"Medicamento"]);opts.push(["__sem","Sem medicação registrada"]);
+  }else if(tipo==="nasc"){
+    opts=[["1","Último 1 mês"],["3","Últimos 3 meses"],["5","Últimos 5 meses"],["7","Últimos 7 meses"],["12","Últimos 12 meses"],["__sem","Sem data de nascimento"]];
+  }else if(tipo==="grupo"){
+    opts=grupos.map(g=>[g.id,g.nome||"Grupo"]);opts.push(["__sem","Sem grupo"]);
+  }else if(tipo==="pasto"){
+    opts=pastos.map(pt=>[pt.id,pt.nome||"Pasto"]);opts.push(["__sem","Sem pasto atual"]);
+  }else if(tipo==="lote"){
+    opts=lotes.map(l=>[l.id,l.nome||"Lote"]);opts.push(["__sem","Sem lote"]);
+  }else if(tipo==="sexo"){
+    opts=[["F","Fêmea"],["M","Macho"]];
+  }else if(tipo==="status"){
+    opts=[["Ativo","Ativo"],["Vendido","Vendido"],["Morto","Morto"]];
+  }
+  if(!tipo){c.innerHTML='<option value="">Primeiro escolha o tipo de filtro</option>';c.disabled=true;}
+  else if(!opts.length){c.innerHTML='<option value="">Nenhuma opção cadastrada</option>';c.disabled=true;}
+  else{c.innerHTML='<option value="">Escolha o critério</option>'+opts.map(([v,n])=>`<option value="${esc(v)}">${esc(n)}</option>`).join("");c.disabled=false;}
+  filtrarAnimais();
+}
 function limparFiltrosAnimais(){
-  ["f_marca","f_med","f_nasc"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  const tipo=document.getElementById("f_tipo");if(tipo)tipo.value="";
+  const c=document.getElementById("f_criterio");if(c){c.innerHTML='<option value="">Primeiro escolha o tipo de filtro</option>';c.value="";c.disabled=true;}
   const b=document.getElementById("busca");if(b)b.value="";
   filtrarAnimais();
 }
 function filtrarAnimais(){
   if(!_dadosAnimais)return;
-  const {animais,nomeLote,marcaSigla,medPorAnimal}=_dadosAnimais;
+  const {animais,nomeLote,marcaSigla,medPorAnimal,gruposPorAnimal,pastosPorLote}=_dadosAnimais;
   const t=(val("busca")||"").toLowerCase();
-  const fMarca=(document.getElementById("f_marca")||{}).value||"";
-  const fMed=(document.getElementById("f_med")||{}).value||"";
-  const fNasc=(document.getElementById("f_nasc")||{}).value||"";
+  const tipo=(document.getElementById("f_tipo")||{}).value||"";
+  const criterio=(document.getElementById("f_criterio")||{}).value||"";
   let limite=null;
-  if(fNasc){const d=new Date();d.setMonth(d.getMonth()-Number(fNasc));limite=d.getTime();}
+  if(tipo==="nasc"&&criterio&&criterio!=="__sem"){const d=new Date();d.setMonth(d.getMonth()-Number(criterio));limite=d.getTime();}
   const lista=animais.slice().sort((x,y)=>(x.codigo||0)-(y.codigo||0)).filter(a=>{
     if(t){const blob=((a.brinco||"")+" "+(a.nome||"")+" "+codAnimal(a)).toLowerCase();if(!blob.includes(t))return false;}
-    if(fMarca){if(fMarca==="__sem"){if(a.marcaId)return false;}else if(a.marcaId!==fMarca)return false;}
-    if(fMed){const s=medPorAnimal[a.id];if(!s||!s.has(fMed))return false;}
-    if(limite!=null){if(!a.dataNascimento)return false;const dn=dataParaTs(a.dataNascimento);if(dn==null||dn<limite)return false;}
+    if(!tipo||!criterio)return true;
+    if(tipo==="marca")return criterio==="__sem"?!a.marcaId:a.marcaId===criterio;
+    if(tipo==="med"){
+      const s=medPorAnimal[a.id];return criterio==="__sem"?(!s||s.size===0):!!(s&&s.has(criterio));
+    }
+    if(tipo==="nasc"){
+      if(criterio==="__sem")return !a.dataNascimento;
+      if(!a.dataNascimento)return false;const dn=dataParaTs(a.dataNascimento);return dn!=null&&dn>=limite;
+    }
+    if(tipo==="grupo"){
+      const s=gruposPorAnimal[a.id];return criterio==="__sem"?(!s||s.size===0):!!(s&&s.has(criterio));
+    }
+    if(tipo==="pasto"){
+      const s=pastosPorLote[a.loteAtualId];return criterio==="__sem"?(!s||s.size===0):!!(s&&s.has(criterio));
+    }
+    if(tipo==="lote")return criterio==="__sem"?!a.loteAtualId:a.loteAtualId===criterio;
+    if(tipo==="sexo")return a.sexo===criterio;
+    if(tipo==="status")return a.status===criterio;
     return true;
   });
   const cont=document.getElementById("lista");
-  if(cont)cont.innerHTML=lista.length?lista.map(a=>{a._marcaSigla=marcaSigla(a.marcaId);return linhaAnimal(a,nomeLote(a.loteAtualId),true);}).join(""):`<div class="meta" style="padding:12px 4px">Nenhum animal com esses filtros.</div>`;
-  const cEl=document.getElementById("animais_count");
-  if(cEl)cEl.textContent=`${lista.length} de ${animais.length} animal(is)`;
+  if(cont)cont.innerHTML=lista.length?lista.map(a=>{a._marcaSigla=marcaSigla(a.marcaId);return linhaAnimal(a,nomeLote(a.loteAtualId),true);}).join(""):`<div class="meta" style="padding:12px 4px">Nenhum animal com esse filtro.</div>`;
+  const cEl=document.getElementById("animais_count");if(cEl)cEl.textContent=`${lista.length} de ${animais.length} animal(is)`;
+  const limpar=document.getElementById("limpar_filtros_animais");if(limpar)limpar.style.display=(t||tipo||criterio)?"block":"none";
 }
 function linhaAnimal(a,nomeLote,mostraLote){
   const sx=sexoChip(a.sexo);
@@ -971,6 +1465,10 @@ async function verAnimal(id){
   const marca=marcas.find(m=>m.id===a.marcaId);
   const mae=a.maeId?await get("animais",a.maeId):null;
   const filhos=(await getAll("animais")).filter(f=>f.maeId===id);
+  const gruposTodos=await getAll("grupos");
+  const vinculosGrupo=(await getAll("grupo_animais")).filter(v=>v.animalId===id);
+  const gruposAnimal=vinculosGrupo.map(v=>gruposTodos.find(g=>g.id===v.grupoId)).filter(Boolean);
+  const gruposChips=gruposAnimal.map(g=>`<span class="chip chip-marca">👥 ${esc(g.nome)}</span>`).join("");
   const eventos=(await getAll("eventos")).filter(e=>e.animalId===id)
     .sort((x,y)=>y.data.localeCompare(x.data)||y.criadoEm-x.criadoEm);
   const {medicamentos}=await tudo();
@@ -994,7 +1492,8 @@ async function verAnimal(id){
             <span class="chip chip-lote">▦ ${esc(nomeLote)}</span>
             ${marca?`<span class="chip chip-marca">${esc(marca.sigla)}</span>`:""}
             ${a.castrado?`<span class="chip chip-off">✂️ Castrado</span>`:""}
-            ${a.status!=="Ativo"?`<span class="chip chip-off">${a.status}</span>`:""}</div>
+            ${a.status!=="Ativo"?`<span class="chip chip-off">${a.status}</span>`:""}
+            ${gruposChips}</div>
         </div>
       </div>
       <div class="meta" style="margin-top:8px">
@@ -1006,6 +1505,7 @@ async function verAnimal(id){
       ${a.saida?blocoSaida(a.saida):""}</div>
     <div class="animal-actions">
       <button class="btn btn-sec" onclick="formEditarAnimal('${id}')">✎ Editar dados</button>
+      <button class="btn btn-sec" onclick="gerenciarGruposAnimal('${id}')">👥 Grupos (${gruposAnimal.length})</button>
       <div class="lado"><button class="btn" onclick="formMedicarAnimal('${id}')">💊 Medicar</button>
         <button class="btn btn-sec" onclick="formMover('${id}')">↷ Mover lote</button></div>
       <button class="btn btn-sec" onclick="formEvento('${id}')">+ Registrar evento de manejo</button>
@@ -1019,52 +1519,636 @@ async function verAnimal(id){
 /* ======================= PERFIL / CONFIG ======================= */
 async function telaPerfil(){
   topoPagina();
-  const {propriedades,marcas,lotes,animais,eventos,medicamentos}=await tudo();
-  const p=await get("perfil","perfil");
+  const user=await authUser();
+
+  if(!user){
+    $t.innerHTML=`
+      <div class="card" style="text-align:center;margin-top:10px">
+        <div class="avatar" style="margin:4px auto 10px">👤</div>
+        <b>Entre na sua conta</b>
+        <div class="meta" style="margin:4px 0 12px">Sua conta é também o seu perfil e identifica os dados deste aparelho.</div>
+        <button class="btn" style="margin:0" onclick="formLoginCloud()">Entrar / criar conta</button>
+        <div class="cloud-note" style="margin-top:12px">O primeiro login precisa de internet. Depois, a sessão fica salva neste aparelho para uso offline.</div>
+      </div>`;
+    return;
+  }
+
+  const {propriedades,marcas,lotes,animais,eventos,medicamentos,grupos}=await tudo();
   const cfg=await getConfig(); const _dias=diasDesde(cfg.ultimoBackup); const _freq=cfg.lembreteDias||7;
-  const perfilHTML = p ? `
+  const p=await carregarPerfilIntegrado(user);
+
+  $t.innerHTML=`
     <div class="card" style="display:flex;align-items:center;gap:14px">
       <div class="avatar-wrap" onclick="formPerfil()">
-        <div class="avatar">${avatarHTML(p.foto,p.nome)}</div><div class="avatar-cam">📷</div>
+        <div class="avatar">${avatarHTML(p.foto,p.nome||user.email||"Usuário")}</div><div class="avatar-cam">📷</div>
       </div>
       <div style="flex:1;min-width:0">
-        <div class="ti" style="font-size:19px">${esc(p.nome)}</div>
+        <div class="ti" style="font-size:19px">${esc(p.nome||"Usuário")}</div>
         ${p.funcao?`<div class="meta">${esc(p.funcao)}</div>`:""}
         ${p.localizacao?`<div class="meta">📍 ${esc(p.localizacao)}</div>`:""}
-        ${p.email?`<div class="meta">✉️ ${esc(p.email)}</div>`:""}
+        <div class="meta">✉️ ${esc(user.email||"")}</div>
         ${p.telefone?`<div class="meta">📞 ${esc(p.telefone)}</div>`:""}
       </div>
       <button class="btn-fant" style="padding:6px;color:var(--verde)" onclick="formPerfil()">✎</button>
-    </div>` : `
-    <div class="card" style="text-align:center">
-      <div class="avatar" style="margin:4px auto 10px">👤</div>
-      <b>Crie seu perfil</b>
-      <div class="meta" style="margin:4px 0 12px">Cadastre nome, função, foto e contatos.</div>
-      <button class="btn" style="margin:0" onclick="formPerfil()">Criar perfil</button>
-    </div>`;
-  $t.innerHTML=perfilHTML+`
+    </div>
     <div class="card"><div class="ti">Resumo</div>
-      <div class="meta" style="margin-top:4px">${propriedades.length} propriedades · ${lotes.length} lotes · ${animais.length} animais · ${eventos.length} eventos</div></div>
+      <div class="meta" style="margin-top:4px">${propriedades.length} propriedades · ${lotes.length} lotes · ${grupos.length} grupos · ${animais.length} animais · ${eventos.length} eventos</div></div>
     <div class="sechead"><h2 style="font-size:16px">Cadastros</h2></div>
     <button class="btn btn-sec" onclick="gerenciarMarcas()">🏷 Marcas / donos (${marcas.length})</button>
     <button class="btn btn-sec" onclick="gerenciarMedicamentos()">💊 Medicamentos (${medicamentos.length})</button>
     <button class="btn btn-sec" onclick="formNovaPropriedade()">🏡 Nova propriedade</button>
-    <div class="sechead" style="margin-top:18px"><h2 style="font-size:16px">Backup</h2></div>
+    <div class="sechead" style="margin-top:18px"><h2 style="font-size:16px">Nuvem e backup</h2></div>
+    <div id="cloudAccountBox"><div class="cloud-card"><div class="meta">Verificando sua conta…</div></div></div>
+    <div class="sechead" style="margin-top:18px"><h2 style="font-size:16px">Backup manual</h2></div>
     <div class="card" style="border-left:4px solid var(--verde)">
       <b>⚠ Faça backup com frequência.</b>
-      <div class="meta" style="margin-top:4px">Os dados ficam só neste aparelho. Salve na nuvem pra não perder nada.</div>
+      <div class="meta" style="margin-top:4px">Use o arquivo .json como cópia extra de segurança ou para transferência manual.</div>
       <div class="meta" style="margin-top:6px">${cfg.ultimoBackup?`Último backup: há ${_dias} dia(s).`:"Nenhum backup salvo ainda."}</div></div>
-    <button class="btn" onclick="salvarNuvem()">☁️ Salvar no iCloud / Arquivos</button>
+    <button class="btn btn-sec" onclick="exportar()">⬇ Baixar backup (.json)</button>
     <label style="display:block;font-size:13px;color:var(--muted);margin:4px 4px 5px;font-weight:600">Lembrar de fazer backup a cada</label>
     <select onchange="salvarFreq(this.value)" style="margin-bottom:12px">
       <option value="3" ${_freq===3?"selected":""}>3 dias</option>
       <option value="7" ${_freq===7?"selected":""}>7 dias</option>
       <option value="15" ${_freq===15?"selected":""}>15 dias</option>
       <option value="30" ${_freq===30?"selected":""}>30 dias</option></select>
-    <button class="btn btn-sec" onclick="exportar()">⬇ Baixar backup (.json)</button>
     <label class="btn btn-sec" style="text-align:center;cursor:pointer">⬆ Importar backup
       <input type="file" accept="application/json" onchange="importar(this)" style="display:none"></label>`;
+  renderContaNuvem();
 }
+
+/* ---------- Conta Supabase / backup em nuvem ---------- */
+async function renderContaNuvem(){
+  const box=document.getElementById("cloudAccountBox"); if(!box)return;
+  const user=await authUser();
+  if(!user){box.innerHTML="";return;}
+  let ultimo="";
+  try{
+    const b=await buscarBackupCloud(false);
+    if(b&&b.updated_at)ultimo=`Último backup na nuvem: ${new Date(b.updated_at).toLocaleString('pt-BR')}`;
+  }catch(e){}
+  box.innerHTML=`<div class="cloud-card">
+    <div class="row"><div style="min-width:0"><div class="ti">☁️ Conta conectada</div>
+      <div class="meta" style="overflow-wrap:anywhere">${esc(user.email||"Usuário")}</div></div>
+      <span class="cloud-status on">Conectado</span></div>
+    ${ultimo?`<div class="meta" style="margin-top:8px">${esc(ultimo)}</div>`:""}
+    <div id="syncStatusBox" style="margin-top:10px"></div>
+    <button class="btn" style="margin-top:10px" onclick="sincronizarAgora()">↻ Sincronizar agora</button>
+    <div class="cloud-grid">
+      <button class="btn btn-sec" onclick="salvarBackupCloud()">☁️ Backup na nuvem</button>
+      <button class="btn btn-sec" onclick="restaurarBackupCloud()">↥ Restaurar backup</button>
+    </div>
+    <button class="btn btn-perigo" style="margin-top:14px;margin-bottom:0" onclick="confirmarLogout()">Sair da conta</button>
+    <div class="cloud-note">A V80 mantém a sincronização automática e a correção de cache. A tela de Medicamentos e Vacinação agora apresenta ações em botões separados, abrindo somente o formulário escolhido.</div>
+  </div>`;
+  atualizarStatusSyncUI();
+}
+function formLoginCloud(){
+  abrir(`<h2>Conta do Rebanho</h2>
+    <div class="meta">Escolha como deseja continuar.</div>
+
+    <button class="btn" style="margin-top:18px" onclick="formEntrarCloud()">Entrar</button>
+    <button class="btn btn-sec" onclick="formCriarContaCloud()">Criar conta</button>
+
+    <button class="btn-fant" onclick="fechar()">Cancelar</button>`);
+}
+
+function formEntrarCloud(msg=""){
+  abrir(`<h2>Entrar</h2>
+    ${msg?`<div class="card" style="background:#f3faf5;border-left:4px solid var(--verde);box-shadow:none;margin-bottom:14px">
+      <b style="color:var(--verde-esc)">✅ Cadastro realizado com sucesso</b>
+      <div class="meta" style="margin-top:4px">${esc(msg)}</div>
+    </div>`:`<div class="meta">Use o e-mail e a senha da sua conta.</div>`}
+
+    <label>E-mail</label>
+    <input id="cl_email" type="email" autocomplete="email" placeholder="seu@email.com">
+
+    <label>Senha</label>
+    <input id="cl_senha" type="password" autocomplete="current-password" placeholder="Sua senha">
+
+    <div id="cl_msg" class="meta" style="margin-top:10px"></div>
+
+    <button class="btn" style="margin-top:18px" onclick="entrarCloud()">Entrar</button>
+    <button class="btn btn-sec" onclick="formCriarContaCloud()">Ainda não tenho conta</button>
+    <button class="btn-fant" onclick="formLoginCloud()">‹ Voltar</button>`);
+}
+
+function formCriarContaCloud(){
+  abrir(`<h2>Criar conta</h2>
+    <div class="meta">Crie sua conta para identificar e proteger os dados do rebanho.</div>
+
+    <label>Nome *</label>
+    <input id="cl_nome" autocomplete="name" placeholder="Seu nome">
+
+    <label>E-mail *</label>
+    <input id="cl_email" type="email" autocomplete="email" placeholder="seu@email.com">
+
+    <label>Senha *</label>
+    <input id="cl_senha" type="password" autocomplete="new-password" placeholder="Crie uma senha">
+
+    <label>Confirmar senha *</label>
+    <input id="cl_senha2" type="password" autocomplete="new-password" placeholder="Repita a senha">
+
+    <div id="cl_msg" class="meta" style="margin-top:10px"></div>
+
+    <button class="btn" style="margin-top:18px" onclick="criarContaCloud()">Criar conta</button>
+    <button class="btn btn-sec" onclick="formEntrarCloud()">Já tenho conta</button>
+    <button class="btn-fant" onclick="formLoginCloud()">‹ Voltar</button>`);
+}
+function cloudMsg(t,erro=false){
+  const el=document.getElementById("cl_msg"); if(el){el.textContent=t;el.style.color=erro?"var(--perigo)":"var(--muted)";}
+}
+async function entrarCloud(){
+  const email=val("cl_email"),password=val("cl_senha");
+  if(!email||!password)return cloudMsg("Informe e-mail e senha.",true);
+  cloudMsg("Entrando…");
+  try{
+    const s=await fetch(SUPABASE_URL+"/auth/v1/token?grant_type=password",{
+      method:"POST",
+      headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json"},
+      body:JSON.stringify({email,password})
+    }).then(async r=>{const b=await r.json();if(!r.ok)throw new Error(b.error_description||b.msg||b.message||"Não foi possível entrar.");return b;});
+    saveAuthSession(s);
+    await prepararContaLocal();
+    await sincronizarPerfilCloud();
+    await sincronizarAgora({silencioso:true});
+    fechar(); irAba("inicio");
+  }catch(e){
+    let msg=e.message||"Erro ao entrar.";
+    if(/confirm|verified|email/i.test(msg))msg="Confirme sua conta pelo e-mail recebido antes de entrar.";
+    cloudMsg(msg,true);
+  }
+}
+async function criarContaCloud(){
+  const nome=val("cl_nome"),email=val("cl_email"),password=val("cl_senha"),password2=val("cl_senha2");
+  if(!nome)return cloudMsg("Informe seu nome para criar a conta.",true);
+  if(!email)return cloudMsg("Informe seu e-mail.",true);
+  if(!password)return cloudMsg("Crie uma senha.",true);
+  if(password.length<8)return cloudMsg("A senha deve ter pelo menos 8 caracteres.",true);
+  if(password!==password2)return cloudMsg("As senhas não coincidem.",true);
+  cloudMsg("Criando conta…");
+  try{
+    const r=await fetch(SUPABASE_URL+"/auth/v1/signup",{
+      method:"POST",
+      headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json"},
+      body:JSON.stringify({email,password,data:{app:"Gestão do Rebanho",full_name:nome}})
+    });
+    const b=await r.json();
+    if(!r.ok)throw new Error(b.msg||b.message||b.error_description||"Não foi possível criar a conta.");
+    // Mesmo que o Supabase devolva sessão imediata, o fluxo da V56
+    // sempre leva o usuário para a tela de login após o cadastro.
+    saveAuthSession(null);
+    formEntrarCloud("Confira seu e-mail e confirme a conta antes de entrar.");
+  }catch(e){cloudMsg(e.message||"Erro ao criar conta.",true);}
+}
+function confirmarLogout(){
+  if(!confirm("Deseja realmente sair da sua conta?"))return;
+  sairCloud();
+}
+async function sairCloud(){
+  try{await sbFetch("/auth/v1/logout",{method:"POST"});}catch(e){}
+  saveAuthSession(null);
+  const m=await garantirSyncMeta();
+  m.active_user_id=null;
+  m.active_org_id=null;
+  await putRaw("sync_meta",m);
+  aba="inicio";
+  document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("ativo",x.dataset.aba==="inicio"));
+  telaBloqueada();
+}
+async function cloudOrgId(){
+  const u=await authUser(); if(!u)throw new Error("Entre na sua conta primeiro.");
+  const rows=await sbFetch("/rest/v1/organization_members?select=organization_id&user_id=eq."+encodeURIComponent(u.id)+"&limit=1");
+  if(!rows||!rows.length)throw new Error("Sua conta ainda não possui uma organização. Execute o SQL de configuração do Supabase no projeto.");
+  return rows[0].organization_id;
+}
+async function cloudDeviceId(){
+  const m=await garantirSyncMeta(); return m.device_id;
+}
+
+async function prepararContaLocal(){
+  const user=await authUser(); if(!user)return null;
+  const meta=await garantirSyncMeta();
+
+  // Offline: mantém a organização previamente associada ao aparelho.
+  if(!navigator.onLine){
+    if(meta.active_user_id===user.id&&meta.active_org_id)return meta.active_org_id;
+    return null;
+  }
+
+  const org=await cloudOrgId();
+  meta.active_user_id=user.id;
+  meta.active_org_id=org;
+
+  // Na primeira adoção da V59, os dados antigos sem organização passam a
+  // pertencer à primeira organização autenticada neste aparelho.
+  if(!meta.legacy_claimed_org_id){
+    for(const s of SYNC_STORES){
+      const arr=await getAllRaw(s);
+      for(const o of arr){
+        if(!o.organization_id){
+          o.organization_id=org;
+          if(o.sync_status==="synced")o.sync_status="pending_update";
+          else if(!o.sync_status)o.sync_status="pending_create";
+          await putRaw(s,o);
+        }
+      }
+    }
+    meta.legacy_claimed_org_id=org;
+  }
+
+  await putRaw("sync_meta",meta);
+  return org;
+}
+
+function payloadSync(o){
+  const p={...o};
+  delete p.sync_status;
+  return p;
+}
+function cloudRecordToLocal(row){
+  const p={...(row.payload||{})};
+  p.id=p.id||row.record_id;
+  p.organization_id=row.organization_id;
+  p.updated_at=row.record_updated_at;
+  p.deleted_at=row.deleted_at||null;
+  p.sync_version=Number(row.sync_version||p.sync_version||1);
+  p.sync_status="synced";
+  return p;
+}
+function cloudMaisNovo(row,local){
+  if(!local)return true;
+  const ct=Date.parse(row.record_updated_at||0)||0;
+  const lt=Date.parse(local.updated_at||0)||0;
+  if(ct!==lt)return ct>lt;
+  return Number(row.sync_version||0)>=Number(local.sync_version||0);
+}
+// Estritamente mais novo (usado para decidir o que rebaixar): evita reaplicar
+// registros idênticos e não depende do relógio do servidor.
+function cloudNewerStrict(row,local){
+  if(!local)return true;
+  const ct=Date.parse(row.record_updated_at||0)||0;
+  const lt=Date.parse(local.updated_at||0)||0;
+  if(ct!==lt)return ct>lt;
+  return Number(row.sync_version||0)>Number(local.sync_version||0);
+}
+
+async function pushPendentes(org,user,device){
+  let enviados=0,recebidos=0;
+  for(const s of SYNC_STORES){
+    const locais=(await getAllRaw(s)).filter(o=>
+      o.organization_id===org && o.sync_status!=="synced"
+    );
+    if(!locais.length)continue;
+
+    // Lotes pequenos evitam requisições muito grandes quando houver fotos/base64.
+    for(let i=0;i<locais.length;i+=25){
+      const lote=locais.slice(i,i+25);
+      const body=lote.map(o=>({
+        organization_id:org,
+        store_name:s,
+        record_id:String(o.id),
+        payload:payloadSync(o),
+        record_updated_at:o.updated_at||agoraISO(),
+        deleted_at:o.deleted_at||null,
+        sync_version:Number(o.sync_version||1),
+        updated_by:user.id,
+        source_device_id:device
+      }));
+      const resp=await sbFetch("/rest/v1/sync_records?on_conflict=organization_id,store_name,record_id",{
+        method:"POST",
+        headers:{"Prefer":"resolution=merge-duplicates,return=representation"},
+        body:JSON.stringify(body)
+      })||[];
+
+      const mapa=new Map(resp.map(r=>[String(r.record_id),r]));
+      for(const local of lote){
+        const remoto=mapa.get(String(local.id));
+        if(!remoto)continue;
+        const atual=await getRaw(s,local.id);
+        if(!atual)continue;
+
+        if(cloudMaisNovo(remoto,atual) &&
+           (Date.parse(remoto.record_updated_at||0)>Date.parse(atual.updated_at||0) ||
+            Number(remoto.sync_version||0)>Number(atual.sync_version||0))){
+          await putRaw(s,cloudRecordToLocal(remoto));
+          recebidos++;
+        }else{
+          atual.organization_id=org;
+          atual.sync_status="synced";
+          await putRaw(s,atual);
+        }
+        enviados++;
+      }
+    }
+  }
+  return {enviados,recebidos};
+}
+
+async function pullCloud(org){
+  /*
+    V75: pull por reconciliação de conteúdo, independente de server_updated_at.
+
+    Motivo: em tabelas padrão do Supabase, server_updated_at é definido no INSERT
+    e NÃO muda no UPDATE (sem trigger). O pull incremental antigo (server_updated_at
+    >= cursor) portanto NÃO enxergava EDIÇÕES feitas em outro aparelho — só
+    inserções. Mover um animal de grupo/lote é uma edição, então não propagava.
+
+    Agora, para cada store: baixamos um "manifesto" leve (só record_id +
+    record_updated_at + sync_version + deleted_at, SEM payload/fotos), comparamos
+    com o local pelo record_updated_at (que sempre avança a cada edição no app) e
+    só baixamos o payload completo dos registros que realmente mudaram. Cobre
+    inserções, edições e exclusões em TODAS as tabelas, sem depender do relógio
+    do servidor e sem rebaixar fotos inalteradas.
+  */
+  let aplicados=0,consultados=0;
+  const PAGE=500;
+  for(const store of SYNC_STORES){
+    // 1) Manifesto leve (paginado), só metadados.
+    const remotos=[]; let offset=0;
+    while(true){
+      const path=
+        "/rest/v1/sync_records?select=record_id,record_updated_at,deleted_at,sync_version"+
+        "&organization_id=eq."+encodeURIComponent(org)+
+        "&store_name=eq."+encodeURIComponent(store)+
+        "&order=record_id.asc&limit="+PAGE+"&offset="+offset;
+      const rows=await sbFetch(path)||[];
+      remotos.push(...rows);
+      offset+=rows.length;
+      if(rows.length<PAGE)break;
+    }
+    consultados+=remotos.length;
+
+    // 2) Decide quais precisam do payload completo (novos ou estritamente mais novos).
+    const precisa=[];
+    for(const r of remotos){
+      const local=await getRaw(store,r.record_id);
+      if(!local || cloudNewerStrict(r,local) ||
+         (local.organization_id&&local.organization_id!==org)){
+        precisa.push(String(r.record_id));
+      }
+    }
+    if(!precisa.length)continue;
+
+    // 3) Baixa o payload completo só dos que mudaram, em lotes.
+    for(let i=0;i<precisa.length;i+=50){
+      const ids=precisa.slice(i,i+50);
+      const inList="("+ids.map(x=>'"'+x+'"').join(",")+")";
+      const path=
+        "/rest/v1/sync_records?select=organization_id,store_name,record_id,payload,record_updated_at,deleted_at,sync_version"+
+        "&organization_id=eq."+encodeURIComponent(org)+
+        "&store_name=eq."+encodeURIComponent(store)+
+        "&record_id=in."+encodeURIComponent(inList);
+      const rows=await sbFetch(path)||[];
+      for(const row of rows){
+        const local=await getRaw(store,row.record_id);
+        const localDeOutraOrg=!!(local&&local.organization_id&&local.organization_id!==org);
+        // Preserva alteração local pendente que seja mais nova que a nuvem.
+        if(!local || localDeOutraOrg || local.sync_status==="synced" || cloudNewerStrict(row,local)){
+          await putRaw(store,cloudRecordToLocal(row));
+          aplicados++;
+        }
+      }
+    }
+  }
+  // Mantém carimbo de tempo apenas para exibição; o pull não depende dele.
+  const meta=await garantirSyncMeta();
+  meta.last_server_sync_at=agoraISO();
+  await putRaw("sync_meta",meta);
+  return {aplicados,consultados,cursor:meta.last_server_sync_at};
+}
+
+async function marcarTudoSincronizado(org){
+  // Depois do pull, itens iguais ao servidor já foram conciliados.
+  // Mantém pendentes somente alterações que ocorreram durante a sincronização.
+  for(const s of SYNC_STORES){
+    const arr=await getAllRaw(s);
+    for(const o of arr){
+      if(o.organization_id!==org || o.sync_status==="synced")continue;
+      // não força status aqui: um put simultâneo precisa continuar pendente
+    }
+  }
+}
+
+async function sincronizarAgora({silencioso=false}={}){
+  if(_syncRunning)return _syncLastResult;
+  if(!navigator.onLine){
+    _syncLastError="Sem internet";
+    if(!silencioso)alert("Sem internet. As alterações ficarão pendentes e serão sincronizadas quando a conexão voltar.");
+    atualizarStatusSyncUI();
+    return null;
+  }
+  const user=await authUser();
+  if(!user){
+    if(!silencioso)formLoginCloud();
+    return null;
+  }
+
+  _syncRunning=true;_syncLastError="";
+  atualizarStatusSyncUI("sincronizando");
+  try{
+    const org=await prepararContaLocal();
+    if(!org)throw new Error("Não foi possível identificar a organização da conta.");
+    const device=await cloudDeviceId();
+
+    const push=await pushPendentes(org,user,device);
+    const pull=await pullCloud(org);
+
+    const meta=await garantirSyncMeta();
+    meta.last_sync_at=agoraISO();
+    meta.active_org_id=org;
+    meta.active_user_id=user.id;
+    await putRaw("sync_meta",meta);
+
+    const totalAplicados=push.recebidos+pull.aplicados;
+    _syncLastResult={...push,pull:pull.aplicados,consultados:pull.consultados,quando:meta.last_sync_at};
+    atualizarStatusSyncUI("ok");
+
+    // V74: atualiza automaticamente tanto a lista de grupos quanto o detalhe
+    // do grupo que estiver aberto. Isso faz um novo vínculo aparecer na tela
+    // assim que chegar de outro aparelho, sem fechar/reabrir o PWA.
+    if(totalAplicados>0){
+      const syncScreen=$t.dataset.syncScreen||"";
+      if(syncScreen==="grupos")await telaGrupos();
+      else if(syncScreen.startsWith("grupo:"))await verGrupo(syncScreen.slice(6));
+    }
+
+    if(!silencioso){
+      alert(`Sincronização concluída.\nEnviados: ${push.enviados}\nRecebidos/aplicados: ${totalAplicados}`);
+      // No Perfil, atualiza contadores/status. Nas subtelas, preserva a tela.
+      if(aba==="perfil")await renderSeguro();
+    }
+    return _syncLastResult;
+  }catch(e){
+    _syncLastError=e.message||String(e);
+    atualizarStatusSyncUI("erro");
+    if(!silencioso)alert("Não foi possível sincronizar: "+_syncLastError);
+    return null;
+  }finally{
+    _syncRunning=false;
+  }
+}
+
+async function statusSync(){
+  const meta=await garantirSyncMeta();
+  let pendentes=0;
+  if(meta.active_org_id){
+    for(const s of SYNC_STORES){
+      const arr=await getAllRaw(s);
+      pendentes+=arr.filter(o=>o.organization_id===meta.active_org_id&&o.sync_status!=="synced").length;
+    }
+  }
+  return {pendentes,last_sync_at:meta.last_sync_at,erro:_syncLastError};
+}
+async function atualizarStatusSyncUI(forcar=""){
+  const el=document.getElementById("syncStatusBox"); if(!el)return;
+  const st=await statusSync();
+  if(forcar==="sincronizando"||_syncRunning){
+    el.innerHTML=`<span class="cloud-status">↻ Sincronizando…</span>`;
+    return;
+  }
+  if(forcar==="erro"||st.erro){
+    el.innerHTML=`<span class="cloud-status" style="background:#fff2ee;color:var(--perigo)">⚠ Falha na sincronização</span>
+      <div class="cloud-note">${esc(st.erro||"Tente novamente.")}</div>`;
+    return;
+  }
+  const quando=st.last_sync_at?new Date(st.last_sync_at).toLocaleString("pt-BR"):"Ainda não sincronizado";
+  el.innerHTML=`<span class="cloud-status ${st.pendentes===0?"on":""}">
+      ${st.pendentes===0?"✓ Sincronizado":`${st.pendentes} pendente(s)`}
+    </span><div class="cloud-note">${esc(quando)}</div>`;
+}
+
+let _ultimoAutoSync=0;
+let _autoSyncInterval=null;
+const AUTO_SYNC_INTERVAL_MS=30000;
+
+function solicitarAutoSync(delay=350,{ignorarJanela=false}={}){
+  // No iPhone não tentamos manter o app trabalhando em segundo plano.
+  // Assim que ele volta a ficar visível, o visibilitychange/pageshow dispara
+  // uma nova sincronização.
+  if(document.visibilityState==="hidden"||!authSession()||!navigator.onLine||_syncRunning)return;
+  const agora=Date.now();
+  // Evita três sincronizações seguidas quando focus/pageshow/visibilitychange
+  // disparam juntos ao voltar para o PWA. A sincronização periódica continua
+  // livre para rodar a cada 30 s enquanto a tela estiver ativa.
+  if(!ignorarJanela&&agora-_ultimoAutoSync<12000)return;
+  _ultimoAutoSync=agora;
+  clearTimeout(_syncTimer);
+  _syncTimer=setTimeout(async()=>{
+    try{
+      await prepararContaLocal();
+      await sincronizarAgora({silencioso:true});
+      atualizarStatusSyncUI();
+    }catch(e){
+      _syncLastError=e.message||String(e);
+      console.warn("Sincronização em segundo plano:",e);
+      atualizarStatusSyncUI("erro");
+    }
+  },delay);
+}
+
+window.addEventListener("online",()=>solicitarAutoSync(300,{ignorarJanela:true}));
+window.addEventListener("pageshow",()=>solicitarAutoSync(450));
+window.addEventListener("focus",()=>solicitarAutoSync(450));
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState==="visible")solicitarAutoSync(300,{ignorarJanela:true});
+});
+
+function iniciarSyncEmSegundoPlano(){
+  // A sincronização jamais participa do caminho crítico de abertura da interface.
+  // Faz uma primeira tentativa logo após renderizar e, enquanto o PWA estiver
+  // realmente aberto/visível, consulta alterações dos outros aparelhos a cada
+  // 30 segundos. O intervalo não tenta executar quando o app está oculto.
+  solicitarAutoSync(350,{ignorarJanela:true});
+  if(_autoSyncInterval)clearInterval(_autoSyncInterval);
+  _autoSyncInterval=setInterval(()=>{
+    if(document.visibilityState==="visible"&&navigator.onLine&&authSession()){
+      solicitarAutoSync(0,{ignorarJanela:true});
+    }
+  },AUTO_SYNC_INTERVAL_MS);
+}
+async function salvarBackupCloud(){
+  if(!navigator.onLine)return alert("Sem internet. O backup local continua disponível.");
+  try{
+    const u=await authUser(); if(!u)return formLoginCloud();
+    const org=await cloudOrgId(),device=await cloudDeviceId(),payload=await dadosBackup();
+    const body={user_id:u.id,organization_id:org,device_id:device,payload,app_version:CLOUD_APP_VERSION,updated_at:new Date().toISOString()};
+    await sbFetch("/rest/v1/cloud_backups?on_conflict=user_id,device_id",{
+      method:"POST",
+      headers:{"Prefer":"resolution=merge-duplicates,return=representation"},
+      body:JSON.stringify(body)
+    });
+    await marcarBackup(); _lembreteOculto=true;
+    alert("Backup salvo na nuvem com sucesso.");
+    telaPerfil();
+  }catch(e){alert("Não foi possível salvar na nuvem: "+e.message);}
+}
+async function buscarBackupCloud(mostrarErro=true){
+  try{
+    const u=await authUser(); if(!u)throw new Error("Entre na sua conta primeiro.");
+    const rows=await sbFetch("/rest/v1/cloud_backups?select=id,payload,created_at,updated_at,device_id,app_version&user_id=eq."+encodeURIComponent(u.id)+"&order=updated_at.desc&limit=1");
+    return rows&&rows.length?rows[0]:null;
+  }catch(e){if(mostrarErro)alert("Não foi possível consultar a nuvem: "+e.message);return null;}
+}
+async function restaurarBackupCloud(){
+  if(!navigator.onLine)return alert("Você precisa de internet para restaurar o backup da nuvem.");
+  const b=await buscarBackupCloud(); if(!b)return alert("Nenhum backup encontrado na sua conta.");
+  const quando=new Date(b.updated_at||b.created_at).toLocaleString("pt-BR");
+  if(!confirm(`Restaurar o backup da nuvem de ${quando}? Isso substituirá os dados locais deste aparelho.`))return;
+  try{
+    await restaurarDadosBackup(b.payload,false);
+    await marcarBackup();
+    alert("Backup da nuvem restaurado com sucesso.");
+    irAba("painel");
+  }catch(e){alert("Não foi possível restaurar: "+e.message);}
+}
+
+async function buscarPerfilCloud(){
+  const u=await authUser(); if(!u)return null;
+  const rows=await sbFetch("/rest/v1/profiles?select=user_id,full_name,role_title,location,phone,avatar_data,updated_at&user_id=eq."+encodeURIComponent(u.id)+"&limit=1");
+  return rows&&rows.length?rows[0]:null;
+}
+function perfilCloudParaLocal(cp,user){
+  return {
+    id:"perfil",
+    user_id:user.id,
+    nome:(cp&&cp.full_name)||((user.user_metadata||{}).full_name)||"",
+    funcao:(cp&&cp.role_title)||"",
+    localizacao:(cp&&cp.location)||"",
+    telefone:(cp&&cp.phone)||"",
+    foto:(cp&&cp.avatar_data)||"",
+    email:user.email||"",
+    cloud_updated_at:(cp&&cp.updated_at)||null
+  };
+}
+async function sincronizarPerfilCloud(){
+  const user=await authUser(); if(!user)return null;
+  let local=await get("perfil","perfil");
+  if(!navigator.onLine){
+    if(local){local.email=user.email||local.email||"";return local;}
+    return perfilCloudParaLocal(null,user);
+  }
+  try{
+    const cp=await buscarPerfilCloud();
+    const p=perfilCloudParaLocal(cp,user);
+    await put("perfil",p);
+    return p;
+  }catch(e){
+    if(local){local.email=user.email||local.email||"";return local;}
+    return perfilCloudParaLocal(null,user);
+  }
+}
+async function carregarPerfilIntegrado(user){
+  const local=await get("perfil","perfil");
+  if(navigator.onLine){
+    try{return await sincronizarPerfilCloud();}catch(e){}
+  }
+  if(local){
+    local.email=user.email||local.email||"";
+    return local;
+  }
+  return perfilCloudParaLocal(null,user);
+}
+
 /* ---------- Perfil do usuário ---------- */
 const iniciais=nome=>((nome||"").trim().split(/\s+/).slice(0,2).map(s=>s[0]||"").join("").toUpperCase()||"?");
 const avatarHTML=(foto,nome)=>foto?`<img src="${foto}" alt="">`:`<span>${esc(iniciais(nome))}</span>`;
@@ -1107,32 +2191,59 @@ async function pickFotoPropriedade(pid,input){
   });
 }
 async function formPerfil(){
-  const p=(await get("perfil","perfil"))||{};
+  const user=await authUser();
+  if(!user)return formLoginCloud();
+  const p=await carregarPerfilIntegrado(user);
   _perfilFoto=p.foto||"";
-  abrir(`<h2>${p.nome?"Editar perfil":"Criar perfil"}</h2>
+  abrir(`<h2>Editar perfil</h2>
     <div style="display:flex;justify-content:center;margin:6px 0 8px">
       <div class="avatar-wrap" onclick="document.getElementById('pf_file').click()">
-        <div class="avatar" id="pf_avatar">${avatarHTML(_perfilFoto,p.nome)}</div><div class="avatar-cam">📷</div>
+        <div class="avatar" id="pf_avatar">${avatarHTML(_perfilFoto,p.nome||user.email)}</div><div class="avatar-cam">📷</div>
       </div>
     </div>
     <input type="file" id="pf_file" accept="image/*" style="display:none" onchange="pickFoto(this)">
     <label>Nome *</label><input id="pf_nome" value="${esc(p.nome||"")}">
     <label>Função na gestão</label><input id="pf_funcao" value="${esc(p.funcao||"")}" placeholder="Ex: Proprietário, Gerente, Veterinário…">
     <label>Localização</label><input id="pf_local" value="${esc(p.localizacao||"")}" placeholder="Ex: Campos - RJ">
-    <label>E-mail</label><input id="pf_email" type="email" value="${esc(p.email||"")}" placeholder="opcional">
+    <label>E-mail da conta</label><input type="email" value="${esc(user.email||"")}" disabled style="background:#f4f6f4;color:var(--muted)">
     <label>Telefone</label><input id="pf_tel" type="tel" value="${esc(p.telefone||"")}" placeholder="Ex: (22) 99999-9999">
+    <div class="meta" style="margin-top:8px">O e-mail pertence à sua conta. Nome, foto e demais dados formam o seu perfil.</div>
     <div class="lado" style="margin-top:18px"><button class="btn btn-sec" onclick="fechar()">Cancelar</button>
       <button class="btn" onclick="salvarPerfil()">Salvar</button></div>`);
 }
 async function salvarPerfil(){
+  const user=await authUser();
+  if(!user)return alert("Entre na sua conta primeiro.");
   const nome=val("pf_nome");if(!nome)return alert("Informe seu nome.");
   const p=(await get("perfil","perfil"))||{id:"perfil"};
-  p.id="perfil";p.nome=nome;p.funcao=val("pf_funcao");p.localizacao=val("pf_local");
-  p.email=val("pf_email");p.telefone=val("pf_tel");p.foto=_perfilFoto||"";
+  p.id="perfil";p.user_id=user.id;p.nome=nome;p.funcao=val("pf_funcao");p.localizacao=val("pf_local");
+  p.email=user.email||"";p.telefone=val("pf_tel");p.foto=_perfilFoto||"";
   await put("perfil",p);
+
+  if(navigator.onLine){
+    try{
+      await sbFetch("/rest/v1/profiles?on_conflict=user_id",{
+        method:"POST",
+        headers:{"Prefer":"resolution=merge-duplicates,return=representation"},
+        body:JSON.stringify({
+          user_id:user.id,
+          full_name:p.nome,
+          role_title:p.funcao||null,
+          location:p.localizacao||null,
+          phone:p.telefone||null,
+          avatar_data:p.foto||null,
+          updated_at:new Date().toISOString()
+        })
+      });
+    }catch(e){
+      alert("Perfil salvo neste aparelho, mas não foi possível atualizar a nuvem agora: "+e.message);
+      fechar();telaPerfil();return;
+    }
+  }
   fechar();telaPerfil();
 }
 async function gerenciarMarcas(){
+  if(!(await podeUsarApp("Gerenciar marcas / donos")))return;
   const marcas=await getAll("marcas");
   let lst=marcas.map(m=>`<div class="sheet-item"><span class="si">🏷</span>
     <div style="flex:1"><b>${esc(m.sigla)}</b> ${m.nome?`· ${esc(m.nome)}`:""}</div>
@@ -1152,7 +2263,7 @@ function abrir(h){$md.innerHTML=h;$ov.classList.add("on");}
 function fechar(){$ov.classList.remove("on");}
 $ov.onclick=e=>{if(e.target===$ov)fechar();};
 
-function menuAdicionar(){abrir(`<h2>Adicionar</h2>
+async function menuAdicionar(){if(!(await podeUsarApp("Adicionar dados")))return;abrir(`<h2>Adicionar</h2>
   <div class="sheet-item rt" onclick="fechar();formNovoAnimal()"><span class="si">🐄</span>Novo animal</div>
   <div class="sheet-item rt" onclick="fechar();formNovoAnimal(null,true)"><span class="si">🍼</span>Registrar nascimento</div>
   <div class="sheet-item rt" onclick="fechar();formSaida()"><span class="si">↩</span>Saída de animal (morte/venda)</div>
@@ -1160,20 +2271,38 @@ function menuAdicionar(){abrir(`<h2>Adicionar</h2>
   <div class="sheet-item rt" onclick="fechar();gerenciarMedicamentos()"><span class="si">💊</span>Cadastrar medicamento</div>
   <div class="sheet-item rt" onclick="fechar();gerenciarMarcas()"><span class="si">🏷</span>Marcas / donos</div>
   <div class="sheet-item rt" onclick="fechar();formNovoLote()"><span class="si">▤</span>Novo lote</div>
+  <div class="sheet-item rt" onclick="fechar();formNovoGrupo()"><span class="si">👥</span>Novo grupo de animais</div>
   <div class="sheet-item rt" onclick="fechar();formNovoPasto()"><span class="si">🌱</span>Novo pasto</div>
   <div class="sheet-item rt" onclick="fechar();formNovaPropriedade()"><span class="si">🏡</span>Nova propriedade</div>
   <button class="btn btn-sec" style="margin-top:14px" onclick="fechar()">Cancelar</button>`);}
-function menuConfig(){abrir(`<h2>Menu</h2>
-  <div class="sheet-item rt" onclick="fechar();irAba('painel')"><span class="si">🐄</span>Gestão operacional</div>
-  <div class="sheet-item rt" onclick="menuFinanceiro()"><span class="si">💰</span>Gestão financeira<span class="chev" style="margin-left:auto;color:var(--verde)">›</span></div>
-  <div class="sheet-item rt" onclick="fechar();irAba('perfil')"><span class="si">💾</span>Backup e Perfil</div>
-  <div class="sheet-item rt" onclick="sobreApp()"><span class="si">ℹ️</span>Sobre o app</div>
-  <button class="btn btn-sec" style="margin-top:14px" onclick="fechar()">Fechar</button>`);}
+async function menuConfig(){
+  const user=await authUser();
+  if(!user){
+    abrir(`<h2>Menu</h2>
+      <div class="sheet-item rt" onclick="fechar();formLoginCloud()"><span class="si">🔐</span>Entrar / criar conta<span class="chev" style="margin-left:auto;color:var(--verde)">›</span></div>
+      <div class="sheet-item rt" onclick="sobreApp()"><span class="si">ℹ️</span>Sobre o app</div>
+      <button class="btn btn-sec" style="margin-top:14px" onclick="fechar()">Fechar</button>`);
+    return;
+  }
+  abrir(`<h2>Menu</h2>
+    <div class="sheet-item rt" onclick="fechar();irAba('inicio')"><span class="si">⌂</span>Início</div>
+    <div class="sheet-item rt" onclick="fechar();abrirOperacional()"><span class="si">🐄</span>Gestão operacional</div>
+    <div class="sheet-item rt" onclick="menuFinanceiro()"><span class="si">💰</span>Gestão financeira</div>
+    <div class="sheet-item rt" onclick="fechar();irAba('perfil')"><span class="si">💾</span>Backup e Perfil</div>
+    <div class="sheet-item rt" onclick="sobreApp()"><span class="si">ℹ️</span>Sobre o app</div>
+    <button class="btn btn-sec" style="margin-top:14px" onclick="fechar()">Fechar</button>`);
+}
 
-function menuFinanceiro(){fechar();_finAno=String(new Date().getFullYear());_finProp="";_finFiltro="todos";finResumo();}
+async function menuFinanceiro(){
+  if(!(await podeUsarApp("Acessar gestão financeira")))return;
+  fechar();
+  aba="financeiro";
+  marcarNav("financeiro");
+  _finAno=String(new Date().getFullYear());_finProp="";_finFiltro="todos";finResumo();
+}
 
 /* ======================= GESTÃO FINANCEIRA ======================= */
-function finHead(){return `<button class="voltar" onclick="irAba('painel')">‹ Sair da Gestão Financeira</button>
+function finHead(){return `<button class="voltar" onclick="irAba('inicio')">‹ Início</button>
   <div class="sechead"><span class="sic">💰</span><h2>Gestão Financeira</h2></div>`;}
 function finTabsBar(a){return `<div class="fintabs">
   <button class="${a==='resumo'?'on':''}" onclick="finResumo()">Resumo</button>
@@ -1182,6 +2311,7 @@ function finTabsBar(a){return `<div class="fintabs">
   <button class="${a==='config'?'on':''}" onclick="finConfig()">Config</button></div>`;}
 
 async function finResumo(){
+  if(!(await podeUsarApp("Acessar gestão financeira")))return;
   topoPagina();
   _finAno=_finAno||String(new Date().getFullYear());
   const {propriedades,lotes,animais}=await tudo();
@@ -1242,6 +2372,7 @@ async function finResumo(){
 }
 
 async function finLancamentos(){
+  if(!(await podeUsarApp("Acessar lançamentos financeiros")))return;
   topoPagina();
   const {propriedades}=await tudo();
   const nomeProp=id=>(propriedades.find(p=>p.id===id)||{}).nome||"";
@@ -1270,6 +2401,7 @@ async function finLancamentos(){
 }
 
 async function formLancamento(id){
+  if(!(await podeUsarApp("Criar ou editar lançamento financeiro")))return;
   const {propriedades}=await tudo();
   const l=id?await get("lancamentos",id):null;
   const tipo=l?l.tipo:"receita";
@@ -1296,6 +2428,7 @@ function finTrocaTipo(){
   document.getElementById("lc_cat").innerHTML=cats.map(c=>`<option value="${esc(c)}">${c}</option>`).join("");
 }
 async function salvarLancamento(id){
+  if(!(await podeUsarApp("Salvar lançamento financeiro")))return;
   const tipo=val("lc_tipo"), categoria=val("lc_cat"), valor=numBR("lc_valor"), data=val("lc_data");
   if(valor==null||valor<=0)return alert("Informe um valor válido.");
   if(!data)return alert("Informe a data de competência.");
@@ -1309,6 +2442,7 @@ async function excluirLancamento(id){if(!confirm("Excluir este lançamento?"))re
 async function toggleLancPago(id){const l=await get("lancamentos",id);if(l){l.pago=!l.pago;l.dataPagamento=l.pago?hoje():null;await put("lancamentos",l);}finLancamentos();}
 
 async function finRelatorios(){
+  if(!(await podeUsarApp("Acessar relatórios financeiros")))return;
   topoPagina();
   _finAno=_finAno||String(new Date().getFullYear());
   const {propriedades,lotes,animais}=await tudo();
@@ -1357,6 +2491,7 @@ async function finRelatorios(){
 }
 
 async function finConfig(){
+  if(!(await podeUsarApp("Acessar configurações financeiras")))return;
   topoPagina();
   $t.innerHTML=`${finHead()}${finTabsBar("config")}
     <div class="card"><b>Como as contas funcionam</b>
@@ -1370,7 +2505,7 @@ async function finConfig(){
 }
 
 function sobreApp(){abrir(`<h2>Gestão do Rebanho</h2>
-  <div class="meta">Controle de rebanho por lote — vacinação, manejo, nascimentos, saídas e histórico por animal.</div>
+  <div class="meta">Controle de rebanho por lote e grupos — vacinação, manejo, nascimentos, saídas e histórico por animal.</div>
   <div class="meta" style="margin-top:8px">Funciona offline. Os dados ficam guardados neste aparelho — lembre de fazer backup em Perfil.</div>
   <button class="btn" style="margin-top:16px" onclick="fechar()">Fechar</button>`);}
 
@@ -1383,6 +2518,7 @@ async function salvarPropriedade(){const n=val("p_nome");if(!n)return alert("Dê
   await put("propriedades",{id:uid(),nome:n,local:val("p_local"),criadoEm:Date.now()});fechar();render();}
 
 async function formNovoLote(propFixa){
+  if(!(await podeUsarApp("Cadastrar lote")))return;
   const props=await getAll("propriedades");
   if(props.length===0){fechar();return alert("Cadastre uma propriedade primeiro (menu + ).");}
   const opt=props.map(p=>`<option value="${p.id}" ${p.id===propFixa?"selected":""}>${esc(p.nome)}</option>`).join("");
@@ -1395,8 +2531,111 @@ async function formNovoLote(propFixa){
 async function salvarLote(){const n=val("l_nome");if(!n)return alert("Dê um nome ao lote.");
   await put("lotes",{id:uid(),nome:n,descricao:val("l_desc"),propriedadeId:val("l_prop"),criadoEm:Date.now()});fechar();render();}
 
+
+/* ---------- GRUPOS DE ANIMAIS ----------
+   Um animal continua com apenas UM lote atual, mas pode participar de vários
+   grupos simultaneamente (ex.: IATF 2026, Novilhas, Protocolo sanitário). */
+async function telaGrupos(){
+  topoPagina();
+  $t.dataset.syncScreen="grupos";
+  const {grupos,grupo_animais,animais}=await tudo();
+  const ativos=new Set(animais.filter(a=>a.status==="Ativo").map(a=>a.id));
+  const conta=gid=>grupo_animais.filter(v=>v.grupoId===gid&&ativos.has(v.animalId)).length;
+  let itens=grupos.map(g=>`<div class="card row rt" onclick="verGrupo('${g.id}')">
+    <div><div class="ti">👥 ${esc(g.nome)}</div>${g.descricao?`<div class="meta">${esc(g.descricao)}</div>`:""}</div>
+    <span class="badge">${conta(g.id)} 🐄</span></div>`).join("");
+  $t.innerHTML=`<button class="voltar" onclick="telaLotes()">‹ Lotes</button>
+    <div class="sechead"><span class="sic">👥</span><h2>Grupos de animais</h2></div>
+    <div class="meta" style="margin:-8px 4px 14px">O lote indica onde o animal está. Grupos são classificações simultâneas e não alteram o lote atual.</div>
+    <button class="btn" onclick="formNovoGrupo()">+ Novo grupo</button>
+    ${itens||`<div class="vazio"><div class="big">👥</div><b>Nenhum grupo</b><div class="meta">Crie grupos para reunir animais por finalidade, protocolo ou categoria.</div></div>`}`;
+}
+async function formNovoGrupo(id){
+  if(!(await podeUsarApp(id?"Editar grupo":"Cadastrar grupo")))return;
+  const g=id?await get("grupos",id):null;
+  abrir(`<h2>${g?"Editar grupo":"Novo grupo"}</h2>
+    <label>Nome *</label><input id="g_nome" value="${g?esc(g.nome||""):""}" placeholder="Ex: IATF 2026">
+    <label>Descrição / finalidade</label><input id="g_desc" value="${g?esc(g.descricao||""):""}" placeholder="Ex: Novilhas do protocolo de reprodução">
+    <div class="lado" style="margin-top:18px"><button class="btn btn-sec" onclick="fechar()">Cancelar</button>
+      <button class="btn" onclick="salvarGrupoAnimal('${id||""}')">Salvar</button></div>`);
+}
+async function salvarGrupoAnimal(id){
+  const nome=val("g_nome");if(!nome)return alert("Informe o nome do grupo.");
+  const g=id?(await get("grupos",id)):{id:uid(),criadoEm:Date.now()};
+  g.nome=nome;g.descricao=val("g_desc");
+  await put("grupos",g);fechar();telaGrupos();
+}
+async function verGrupo(id){
+  topoPagina();
+  $t.dataset.syncScreen="grupo:"+id;
+  const g=await get("grupos",id);if(!g)return telaGrupos();
+  const {animais,lotes,grupo_animais}=await tudo();
+  const ids=new Set(grupo_animais.filter(v=>v.grupoId===id).map(v=>v.animalId));
+  const membros=animais.filter(a=>ids.has(a.id)&&a.status==="Ativo");
+  const nomeLote=lid=>(lotes.find(l=>l.id===lid)||{}).nome||"—";
+  const itens=membros.map(a=>`<div class="card row">
+    <div class="rt" style="flex:1" onclick="verAnimal('${a.id}')"><div class="ti">${esc(rotulo(a))} <span class="chip chip-id">${codAnimal(a)}</span></div><div class="meta">▦ ${esc(nomeLote(a.loteAtualId))}</div></div>
+    <button class="btn-fant" style="padding:5px 8px;color:var(--perigo)" onclick="removerAnimalGrupo('${id}','${a.id}')">✕</button></div>`).join("");
+  $t.innerHTML=`<button class="voltar" onclick="telaGrupos()">‹ Grupos</button>
+    <div class="card"><div class="ti" style="font-size:20px">👥 ${esc(g.nome)}</div>${g.descricao?`<div class="meta">${esc(g.descricao)}</div>`:""}<div class="meta" style="margin-top:5px">${membros.length} animal(is) ativo(s)</div></div>
+    <button class="btn" onclick="adicionarAnimaisGrupo('${id}')">+ Adicionar animais</button>
+    <div class="lado"><button class="btn btn-sec" onclick="formNovoGrupo('${id}')">✎ Editar grupo</button><button class="btn btn-perigo" onclick="excluirGrupo('${id}')">Excluir grupo</button></div>
+    <div class="h3">Animais do grupo</div>${itens||`<div class="meta">Nenhum animal neste grupo.</div>`}`;
+}
+async function adicionarAnimaisGrupo(grupoId){
+  const animais=(await getAll("animais")).filter(a=>a.status==="Ativo");
+  const vinculos=await getAll("grupo_animais");
+  const ja=new Set(vinculos.filter(v=>v.grupoId===grupoId).map(v=>v.animalId));
+  const disp=animais.filter(a=>!ja.has(a.id));
+  if(!disp.length)return alert("Todos os animais ativos já pertencem a este grupo.");
+  const opts=disp.map(a=>`<label style="display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--linha);padding:11px 2px;margin:0;color:var(--texto)"><input type="checkbox" class="ga_ck" value="${a.id}" style="width:20px;height:20px"> <span>${esc(rotulo(a))} ${codAnimal(a)}</span></label>`).join("");
+  abrir(`<h2>Adicionar ao grupo</h2><div class="meta" style="margin-bottom:10px">Selecione um ou vários animais.</div>${opts}
+    <div class="lado" style="margin-top:18px"><button class="btn btn-sec" onclick="fechar()">Cancelar</button><button class="btn" onclick="salvarAnimaisGrupo('${grupoId}')">Adicionar</button></div>`);
+}
+async function salvarAnimaisGrupo(grupoId){
+  const ids=[...document.querySelectorAll(".ga_ck:checked")].map(x=>x.value);
+  if(!ids.length)return alert("Selecione pelo menos um animal.");
+  const existentes=await getAll("grupo_animais");
+  for(const animalId of ids){
+    if(existentes.some(v=>v.grupoId===grupoId&&v.animalId===animalId))continue;
+    await put("grupo_animais",{id:uid(),grupoId,animalId,criadoEm:Date.now()});
+  }
+  fechar();verGrupo(grupoId);
+}
+async function removerAnimalGrupo(grupoId,animalId){
+  const v=(await getAll("grupo_animais")).find(x=>x.grupoId===grupoId&&x.animalId===animalId);if(!v)return;
+  await del("grupo_animais",v.id);verGrupo(grupoId);
+}
+async function excluirGrupo(id){
+  const g=await get("grupos",id);if(!g)return;
+  if(!confirm(`Excluir o grupo "${g.nome}"? Os animais não serão apagados.`))return;
+  const vs=(await getAll("grupo_animais")).filter(v=>v.grupoId===id);
+  for(const v of vs)await del("grupo_animais",v.id);
+  await del("grupos",id);telaGrupos();
+}
+async function gerenciarGruposAnimal(animalId){
+  const a=await get("animais",animalId);if(!a)return;
+  const grupos=await getAll("grupos"),vinculos=await getAll("grupo_animais");
+  if(!grupos.length){
+    abrir(`<h2>👥 Grupos — ${esc(rotulo(a))}</h2><div class="meta">Nenhum grupo foi criado ainda.</div><button class="btn" style="margin-top:16px" onclick="fechar();formNovoGrupo()">+ Criar primeiro grupo</button><button class="btn-fant" onclick="fechar()">Fechar</button>`);return;
+  }
+  const meus=new Set(vinculos.filter(v=>v.animalId===animalId).map(v=>v.grupoId));
+  const opts=grupos.map(g=>`<label style="display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--linha);padding:11px 2px;margin:0;color:var(--texto)"><input type="checkbox" class="ag_ck" value="${g.id}" ${meus.has(g.id)?"checked":""} style="width:20px;height:20px"> <span><b>${esc(g.nome)}</b>${g.descricao?`<span class="meta" style="display:block">${esc(g.descricao)}</span>`:""}</span></label>`).join("");
+  abrir(`<h2>👥 Grupos — ${esc(rotulo(a))}</h2><div class="meta" style="margin-bottom:10px">O animal pode pertencer a vários grupos ao mesmo tempo. O lote atual não será alterado.</div>${opts}
+    <div class="lado" style="margin-top:18px"><button class="btn btn-sec" onclick="fechar()">Cancelar</button><button class="btn" onclick="salvarGruposDoAnimal('${animalId}')">Salvar</button></div>`);
+}
+async function salvarGruposDoAnimal(animalId){
+  const selecionados=new Set([...document.querySelectorAll(".ag_ck:checked")].map(x=>x.value));
+  const vinculos=(await getAll("grupo_animais")).filter(v=>v.animalId===animalId);
+  const atuais=new Set(vinculos.map(v=>v.grupoId));
+  for(const v of vinculos)if(!selecionados.has(v.grupoId))await del("grupo_animais",v.id);
+  for(const grupoId of selecionados)if(!atuais.has(grupoId))await put("grupo_animais",{id:uid(),grupoId,animalId,criadoEm:Date.now()});
+  fechar();verAnimal(animalId);
+}
+
 /* ---------- PASTOS / PIQUETES ---------- */
 async function formNovoPasto(propFixa){
+  if(!(await podeUsarApp("Cadastrar pasto")))return;
   const {propriedades,lotes}=await tudo();
   if(!propriedades.length){fechar();return alert("Cadastre uma propriedade primeiro.");}
   const optProp=propriedades.map(p=>`<option value="${p.id}" ${p.id===propFixa?"selected":""}>${esc(p.nome)}</option>`).join("");
@@ -1472,15 +2711,26 @@ async function excluirPasto(id){
 }
 
 async function formNovoAnimal(loteFixo,nascimento){
+  if(!(await podeUsarApp(nascimento?"Registrar nascimento":"Cadastrar animal")))return;
   _animalFoto="";
   const {propriedades,marcas,lotes,animais}=await tudo();
+  // V67: nenhum animal pode ser criado sem que exista ao menos uma Marca / dono; mãe é opcional.
+  // A validação acontece antes da exigência de lote para orientar o cadastro na ordem correta.
+  if(marcas.length===0){
+    fechar();
+    abrir(`<h2>🏷 Cadastre uma marca / dono primeiro</h2>
+      <div class="meta" style="margin:8px 0 16px">Antes de ${nascimento?"registrar um nascimento":"cadastrar um animal"}, é necessário identificar o proprietário do animal.</div>
+      <button class="btn" onclick="fechar();gerenciarMarcas()">+ Cadastrar marca / dono</button>
+      <button class="btn btn-sec" onclick="fechar()">Cancelar</button>`);
+    return;
+  }
   if(lotes.length===0){fechar();return alert("Crie um lote primeiro.");}
   const optLotes=lotes.map(l=>{const p=propriedades.find(x=>x.id===l.propriedadeId);
     return`<option value="${l.id}" ${l.id===loteFixo?"selected":""}>${esc(l.nome)}${p?` — ${esc(p.nome)}`:""}</option>`;}).join("");
   const femeas=animais.filter(a=>a.sexo==="F");
   const optMae=`<option value="">— nenhuma —</option>`+
     femeas.map(m=>`<option value="${m.id}">${esc(rotulo(m))}</option>`).join("");
-  const optMarca=`<option value="">— sem marca —</option>`+
+  const optMarca=`<option value="">— selecione —</option>`+
     marcas.map(m=>`<option value="${m.id}">${esc(m.sigla)}${m.nome?` · ${esc(m.nome)}`:""}</option>`).join("");
   // no fluxo de nascimento, já é nascido na propriedade (sem toggle)
   const toggle=nascimento?"":`
@@ -1498,19 +2748,19 @@ async function formNovoAnimal(loteFixo,nascimento){
     </div>
     <input type="file" id="an_file" accept="image/*" style="display:none" onchange="pickFotoAnimal(this)">
     <div class="meta" style="text-align:center;margin:-4px 0 10px">Foto do animal (opcional)</div>
-    <label>Brinco / identificação</label><input id="a_brinco" placeholder="Opcional">
+    <label>Brinco / identificação (único)</label><input id="a_brinco" placeholder="Opcional">
     <label>Nome (opcional)</label><input id="a_nome">
     <label>Sexo *</label><select id="a_sexo"><option value="F">Fêmea</option><option value="M">Macho</option></select>
     ${toggle}
     <div id="grp_nasc" style="display:${nascimento?"block":"none"}">
       <label>Data de nascimento</label><input id="a_nasc" type="date" value="${hoje()}">
-      <label>Mãe ${nascimento?"*":"(opcional)"}</label><select id="a_mae">${optMae}</select>
+      <label>Mãe (opcional)</label><select id="a_mae">${optMae}</select>
     </div>
     <div id="grp_compra" style="display:${nascimento?"none":"block"}">
       <label>Peso de compra (kg vivo)</label><input id="a_pesocompra" inputmode="decimal" placeholder="Ex: 180">
       <label>Preço de compra (R$)</label><input id="a_precocompra" inputmode="decimal" placeholder="Ex: 2500 — vira o custo de estoque">
     </div>
-    <label>Marca / dono</label><select id="a_marca">${optMarca}</select>
+    <label>Marca / dono *</label><select id="a_marca">${optMarca}</select>
     <label>Lote *</label><select id="a_lote">${optLotes}</select>
     <div class="lado" style="margin-top:18px"><button class="btn btn-sec" onclick="fechar()">Cancelar</button>
       <button class="btn" onclick="salvarAnimal(${!!nascimento})">Salvar</button></div>`);}
@@ -1522,14 +2772,17 @@ function toggleOrigem(){
 async function salvarAnimal(nascimento){
   const nasceu = nascimento || ((document.getElementById("a_nasceu")||{}).value==="sim");
   const maeId = nasceu ? (val("a_mae")||null) : null;
-  if(nascimento&&!maeId)return alert("Selecione a mãe do bezerro.");
+  const marcaId = val("a_marca")||null;
+  const brinco = val("a_brinco");
+  if(!marcaId)return alert("Selecione a marca / dono do animal.");
+  if(brinco && await brincoEmUso(brinco))return alert(`Já existe um animal com o brinco / identificação "${brinco}". Cada animal deve ter uma identificação única.`);
   const a={id:uid(),codigo:await proximoCodigo(),
-    brinco:val("a_brinco"),nome:val("a_nome"),sexo:val("a_sexo"),
+    brinco,nome:val("a_nome"),sexo:val("a_sexo"),
     nascidoNaPropriedade:!!nasceu,
     dataNascimento: nasceu ? val("a_nasc") : "",
     pesoCompraKg: nasceu ? null : numBR("a_pesocompra"),
     custoEstoque: nasceu ? 0 : (numBR("a_precocompra")||0),
-    maeId,marcaId:val("a_marca")||null,loteAtualId:val("a_lote"),status:"Ativo",foto:_animalFoto||"",criadoEm:Date.now()};
+    maeId,marcaId,loteAtualId:val("a_lote"),status:"Ativo",foto:_animalFoto||"",criadoEm:Date.now()};
   await put("animais",a);
   if(maeId){const m=await get("animais",maeId);await registrarEvento(a.id,"Nascimento",a.dataNascimento,`Filho(a) de ${m?rotulo(m):"—"}`);}
   fechar();render();
@@ -1552,6 +2805,7 @@ function blocoSaida(s){
     </div></div>`;
 }
 async function formSaida(animalId){
+  if(!(await podeUsarApp("Registrar saída do animal")))return;
   let seletor="";
   if(!animalId){
     const {lotes,animais}=await tudo();
@@ -1638,7 +2892,7 @@ async function formEditarAnimal(id){
     </div>
     <input type="file" id="an_file" accept="image/*" style="display:none" onchange="pickFotoAnimal(this)">
     <div class="meta" style="text-align:center;margin:-4px 0 10px">Toque para ${_animalFoto?"trocar":"adicionar"} a foto</div>
-    <label>Brinco / identificação</label><input id="e_brinco" value="${esc(a.brinco||"")}" placeholder="Opcional">
+    <label>Brinco / identificação (único)</label><input id="e_brinco" value="${esc(a.brinco||"")}" placeholder="Opcional">
     <label>Nome (opcional)</label><input id="e_nome" value="${esc(a.nome||"")}">
     <label>Sexo *</label><select id="e_sexo">
       <option value="F" ${a.sexo==="F"?"selected":""}>Fêmea</option>
@@ -1667,7 +2921,9 @@ function toggleOrigemEdit(){
 async function salvarEdicaoAnimal(id){
   const a=await get("animais",id);
   const nasceu=document.getElementById("e_nasceu").value==="sim";
-  a.brinco=val("e_brinco");
+  const brinco=val("e_brinco");
+  if(brinco && await brincoEmUso(brinco,id))return alert(`Já existe outro animal com o brinco / identificação "${brinco}". Cada animal deve ter uma identificação única.`);
+  a.brinco=brinco;
   a.nome=val("e_nome");
   a.sexo=val("e_sexo");
   a.nascidoNaPropriedade=nasceu;
@@ -1717,7 +2973,8 @@ async function salvarMedicarLote(loteId){
   fechar();verLote(loteId);alert(`"${nome}" registrado em ${ativos.length} animal(is).`);
 }
 
-async function formMover(id){const a=await get("animais",id);
+async function formMover(id){
+  if(!(await podeUsarApp("Mover animal de lote")))return;const a=await get("animais",id);
   const {propriedades,lotes}=await tudo();const outros=lotes.filter(l=>l.id!==a.loteAtualId);
   if(!outros.length)return alert("Não há outro lote.");
   const opt=outros.map(l=>{const p=propriedades.find(x=>x.id===l.propriedadeId);
@@ -1729,6 +2986,7 @@ async function confMover(id){await moverAnimal(id,val("mv_lote"));fechar();verAn
 
 /* ======================= MANEJO ======================= */
 async function telaManejo(){
+  if(!(await podeUsarApp("Acessar manejo")))return;
   topoPagina();
   const {animais,eventos,medicamentos}=await tudo();
   const nomeAnimal=id=>{const a=animais.find(x=>x.id===id);return a?`${rotulo(a)} ${codAnimal(a)}`:"Animal não encontrado";};
@@ -1773,13 +3031,13 @@ async function telaManejo(){
     });
     return `<div class="manejo-sec"><div class="manejo-sec-head"><div class="manejo-sec-title">${icone} ${titulo}</div><span class="manejo-count">${grupos.length}</span></div>${verMais(regsArr,"registro(s)")}</div>`;
   };
-  $t.innerHTML=`<button class="voltar" onclick="irAba('painel')">‹ Painel</button>
+  $t.innerHTML=`<button class="voltar" onclick="irAba('painel')">‹ Gestão Operacional</button>
     <div class="sechead"><span class="sic">☑</span><h2>Manejo</h2></div>
-    <div class="meta" style="margin:0 4px 14px">Escolha a ação — depois você aplica a um animal ou a um lote inteiro.</div>
+    <div class="meta" style="margin:0 4px 14px">Escolha a ação e depois selecione em quais animais ela será registrada.</div>
     <div class="mod-list">
     ${mod("🔥","Marcar animais","Registrar marcação (ferro).","formManejo('Marcação')")}
-    ${mod("💊","Medicamento aplicado","Injeção, pour on, spray, brinco, ingestão…","formManejo('Medicamento')")}
-    ${mod("↷","Trocar de lote","Mover um animal ou o lote inteiro.","formManejo('Movimentação')")}
+    ${mod("💊","Medicamento aplicado","Vacinas, injeção, pour on, spray, brinco, ingestão…","telaMedicamentosManejo()")}
+    ${mod("↷","Trocar de lote","Selecione vários animais e mova todos de uma vez.","telaTrocaLote()")}
     ${mod("✂️","Outros","Castração e outros eventos de manejo.","formManejo('Outros')")}
     </div>
     <div class="manejo-hist">
@@ -1791,13 +3049,225 @@ async function telaManejo(){
       ${sec("Outro","📌","Outros eventos")}
     </div>`;
 }
+async function telaMedicamentosManejo(){
+  if(!(await podeUsarApp("Acessar medicamentos e vacinação")))return;
+  topoPagina();
+  const {propriedades,lotes,animais,medicamentos,eventos}=await tudo();
+  const ativos=animais.filter(a=>a.status==="Ativo").sort((x,y)=>(x.codigo||0)-(y.codigo||0));
+  const nomeLote=id=>(lotes.find(l=>l.id===id)||{}).nome||"—";
+  const optAnimais=ativos.map(a=>`<option value="${a.id}">${esc(rotulo(a))} ${codAnimal(a)} — ${esc(nomeLote(a.loteAtualId))}</option>`).join("");
+  const optLotes=lotes.map(l=>{const p=propriedades.find(x=>x.id===l.propriedadeId);return `<option value="${l.id}">${esc(l.nome)}${p?` — ${esc(p.nome)}`:""}</option>`;}).join("");
+  const optMed=medicamentos.map(m=>`<option value="${m.id}">${esc(m.nome)}${m.marca?` · ${esc(m.marca)}`:""}</option>`).join("");
+  const listaMeds=medicamentos.map(m=>`<div class="sheet-item" style="padding-left:0;padding-right:0">
+    <span class="si">💊</span><div style="flex:1"><b>${esc(m.nome)}</b>${m.marca?` · ${esc(m.marca)}`:""}
+    ${(m.tipo||m.fabricante)?`<div class="meta">${[m.tipo,m.fabricante].filter(Boolean).map(esc).join(" · ")}</div>`:""}</div>
+    <button class="btn-fant" style="padding:4px 8px;color:var(--verde)" onclick="formEditarMedicamento('${m.id}')">✎</button>
+    <button class="btn-fant" style="padding:4px 8px;color:var(--perigo)" onclick="excluirMedicamentoPagina('${m.id}')">✕</button></div>`).join("") || `<div class="meta">Nenhum medicamento cadastrado ainda.</div>`;
+  const aplicacoes=eventos.filter(e=>e.tipo==="Medicamento").sort((a,b)=>(b.data||"").localeCompare(a.data||"")||(b.hora||"").localeCompare(a.hora||"")).slice(0,8);
+  const nomeAnimal=id=>{const a=animais.find(x=>x.id===id);return a?`${rotulo(a)} ${codAnimal(a)}`:"Animal não encontrado";};
+  const nomeMed=id=>(medicamentos.find(m=>m.id===id)||{}).nome||"Medicamento não informado";
+  const hist=aplicacoes.map(e=>`<div class="manejo-reg"><div class="mr-top"><div class="mr-title">${esc(nomeMed(e.medicamentoId))}</div><div class="mr-date">${fmt(e.data)}${e.hora?` · ${esc(e.hora)}`:""}</div></div><div class="mr-meta">${esc(nomeAnimal(e.animalId))}${e.via?` · ${esc(e.via)}`:""}${e.dose?` · ${esc(e.dose)}`:""}${e.detalhes?`<br>${esc(e.detalhes)}`:""}</div></div>`).join("");
+
+  $t.innerHTML=`<button class="voltar" onclick="telaManejo()">‹ Manejo</button>
+    <div class="sechead"><span class="sic">💊</span><h2>Medicamentos e Vacinação</h2></div>
+    <div class="meta" style="margin:0 4px 14px">Escolha o que deseja fazer. O formulário só será aberto depois que você selecionar uma opção.</div>
+
+    <div class="med-acoes">
+      <button type="button" class="med-acao-btn" onclick="alternarPainelMedicamentos('aplicacao')">
+        <span class="med-acao-ico">💉</span>
+        <span class="med-acao-conteudo"><strong>Registrar aplicação</strong><small>Aplicar medicamento ou vacina</small></span>
+        <span class="med-acao-seta">›</span>
+      </button>
+      <button type="button" class="med-acao-btn" onclick="alternarPainelMedicamentos('cadastro')">
+        <span class="med-acao-ico">💊</span>
+        <span class="med-acao-conteudo"><strong>Medicamentos cadastrados</strong><small>Consultar ou cadastrar medicamentos</small></span>
+        <span class="med-acao-seta">›</span>
+      </button>
+    </div>
+
+    <div id="mp_painel_aplicacao" class="card" style="display:none;padding:18px;margin-bottom:18px">
+      <div class="h3" style="margin:0 0 10px">Registrar aplicação</div>
+      <label>Aplicar em *</label>
+      <select id="mp_alvo" onchange="toggleAlvoMedicamentoPagina()">
+        <option value="animal">Um animal específico</option>
+        <option value="lote">Lote inteiro</option>
+      </select>
+      <div id="mp_grp_animal"><label>Animal *</label><select id="mp_animal">${optAnimais||`<option value="">— nenhum animal ativo —</option>`}</select></div>
+      <div id="mp_grp_lote" style="display:none"><label>Lote *</label><select id="mp_lote">${optLotes||`<option value="">— nenhum lote —</option>`}</select></div>
+      <label>Medicamento / vacina *</label>
+      <select id="mp_med">${optMed||`<option value="">— nenhum medicamento cadastrado —</option>`}</select>
+      ${!medicamentos.length?`<div class="meta" style="margin-top:8px">Cadastre primeiro um medicamento na opção “Medicamentos cadastrados”.</div>`:""}
+      <label>Data e hora</label>
+      <div class="lado"><input id="mp_data" type="date" value="${hoje()}"><input id="mp_hora" type="time" value="${horaAgora()}"></div>
+      <label>Via de aplicação</label><select id="mp_via">${VIAS.map(v=>`<option value="${v}">${v}</option>`).join("")}</select>
+      <label>Dose (opcional)</label><input id="mp_dose" placeholder="Ex: 5 ml">
+      <label>Informações adicionais (opcional)</label><textarea id="mp_obs" rows="3" placeholder="Ex: reforço, lote do produto, observações da aplicação…"></textarea>
+      <button class="btn" style="margin-top:16px" onclick="salvarMedicamentoManejoPagina()">Registrar aplicação</button>
+    </div>
+
+    <div id="mp_painel_cadastro" class="card" style="display:none;padding:18px;margin-bottom:18px">
+      <div class="h3" style="margin:0 0 6px">Medicamentos cadastrados</div>
+      ${listaMeds}
+      <div class="h3" style="margin:18px 0 8px">Cadastrar novo medicamento</div>
+      <label>Nome *</label><input id="mp_novo_nome" placeholder="Ex: Ivomec">
+      <label>Tipo</label><select id="mp_novo_tipo">${optTipoMed()}</select>
+      <label>Fabricante</label><input id="mp_novo_fab" placeholder="Ex: Boehringer">
+      <label>Marca comercial</label><input id="mp_novo_marca" placeholder="Ex: Ivomec Gold">
+      <label>Observação</label><input id="mp_novo_obs" placeholder="Opcional">
+      <button class="btn btn-sec" style="margin-top:14px" onclick="salvarMedicamentoPagina()">+ Cadastrar medicamento</button>
+    </div>
+
+    ${hist?`<div class="card" style="padding:18px;margin-bottom:18px"><div class="h3" style="margin:0 0 8px">Aplicações recentes</div>${hist}</div>`:""}`;
+}
+function alternarPainelMedicamentos(painel){
+  const aplicacao=document.getElementById("mp_painel_aplicacao");
+  const cadastro=document.getElementById("mp_painel_cadastro");
+  if(!aplicacao||!cadastro)return;
+  const alvo=painel==="aplicacao"?aplicacao:cadastro;
+  const outro=painel==="aplicacao"?cadastro:aplicacao;
+  const abrir=alvo.style.display==="none";
+  outro.style.display="none";
+  alvo.style.display=abrir?"block":"none";
+  if(abrir)setTimeout(()=>alvo.scrollIntoView({behavior:"smooth",block:"start"}),50);
+}
+function toggleAlvoMedicamentoPagina(){
+  const lote=(document.getElementById("mp_alvo")||{}).value==="lote";
+  const ga=document.getElementById("mp_grp_animal"),gl=document.getElementById("mp_grp_lote");
+  if(ga)ga.style.display=lote?"none":"block";
+  if(gl)gl.style.display=lote?"block":"none";
+}
+async function salvarMedicamentoManejoPagina(){
+  const medId=(document.getElementById("mp_med")||{}).value;
+  if(!medId)return alert("Cadastre e selecione o medicamento ou vacina.");
+  const alvo=(document.getElementById("mp_alvo")||{}).value||"animal";
+  const todos=await getAll("animais");
+  let lista=[];
+  if(alvo==="animal"){
+    const id=(document.getElementById("mp_animal")||{}).value;
+    if(!id)return alert("Selecione o animal.");
+    lista=[id];
+  }else{
+    const loteId=(document.getElementById("mp_lote")||{}).value;
+    if(!loteId)return alert("Selecione o lote.");
+    lista=todos.filter(a=>a.loteAtualId===loteId&&a.status==="Ativo").map(a=>a.id);
+    if(!lista.length)return alert("Esse lote não tem animais ativos.");
+  }
+  const data=val("mp_data"),hora=val("mp_hora"),via=val("mp_via"),dose=val("mp_dose"),obs=val("mp_obs");
+  for(const id of lista)await registrarEvento(id,"Medicamento",data,obs,{hora,medicamentoId:medId,via,dose});
+  alert(`Aplicação registrada em ${lista.length} animal(is).`);
+  telaMedicamentosManejo();
+}
+async function salvarMedicamentoPagina(){
+  const nome=val("mp_novo_nome");
+  if(!nome)return alert("Informe o nome do medicamento.");
+  await put("medicamentos",{id:uid(),nome,tipo:val("mp_novo_tipo"),fabricante:val("mp_novo_fab"),marca:val("mp_novo_marca"),obs:val("mp_novo_obs")});
+  alert("Medicamento cadastrado com sucesso.");
+  telaMedicamentosManejo();
+}
+async function excluirMedicamentoPagina(id){
+  const m=await get("medicamentos",id);
+  if(!confirm(`Excluir o medicamento "${m?m.nome:""}"?`))return;
+  await del("medicamentos",id);
+  telaMedicamentosManejo();
+}
+
+async function telaTrocaLote(){
+  if(!(await podeUsarApp("Trocar animais de lote")))return;
+  topoPagina();
+  const {propriedades,lotes,animais}=await tudo();
+  const ativos=animais.filter(a=>a.status==="Ativo").sort((x,y)=>(x.codigo||0)-(y.codigo||0));
+  if(!lotes.length){
+    $t.innerHTML=`<button class="voltar" onclick="telaManejo()">‹ Manejo</button>
+      <div class="sechead"><span class="sic">↷</span><h2>Trocar de lote</h2></div>
+      <div class="card" style="padding:20px"><div class="meta">Cadastre pelo menos dois lotes para realizar uma troca.</div></div>`;
+    return;
+  }
+  const nomeLote=id=>(lotes.find(l=>l.id===id)||{}).nome||"Sem lote";
+  const optOrigem=lotes.map(l=>`<option value="${l.id}">${esc(l.nome)}</option>`).join("");
+  const optDestino=lotes.map(l=>{const pr=propriedades.find(p=>p.id===l.propriedadeId);return `<option value="${l.id}">${esc(l.nome)}${pr?` — ${esc(pr.nome)}`:""}</option>`;}).join("");
+  const cards=ativos.map(a=>`<label class="troca-animal" data-lote="${a.loteAtualId||""}" style="display:flex;align-items:center;gap:12px;padding:13px 10px;border-bottom:1px solid var(--borda);cursor:pointer">
+      <input type="checkbox" class="troca-check" value="${a.id}" onchange="atualizarSelecaoTroca()" style="width:24px;height:24px;min-width:24px;margin:0;accent-color:var(--verde)">
+      <div style="flex:1;min-width:0"><b>${esc(rotulo(a))} ${codAnimal(a)}</b><div class="meta" style="margin-top:2px">${esc(nomeLote(a.loteAtualId))}</div></div>
+    </label>`).join("") || `<div class="meta" style="padding:14px 0">Nenhum animal ativo cadastrado.</div>`;
+  $t.innerHTML=`<button class="voltar" onclick="telaManejo()">‹ Manejo</button>
+    <div class="sechead"><span class="sic">↷</span><h2>Trocar de lote</h2></div>
+    <div class="meta" style="margin:0 4px 14px">Marque todos os animais que deseja movimentar e escolha o lote de destino.</div>
+
+    <div class="card" style="padding:18px;margin-bottom:18px">
+      <label>Mostrar animais do lote</label>
+      <select id="tl_origem" onchange="filtrarAnimaisTroca()">
+        <option value="">Todos os lotes</option>${optOrigem}
+      </select>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 8px">
+        <b id="tl_contagem">0 selecionados</b>
+        <button class="btn-fant" style="padding:6px 0;color:var(--verde);font-weight:700" onclick="marcarVisiveisTroca()">Selecionar visíveis</button>
+      </div>
+      <div id="tl_animais" style="max-height:48vh;overflow:auto;border-top:1px solid var(--borda);border-bottom:1px solid var(--borda)">${cards}</div>
+      <button class="btn-fant" id="tl_limpar" style="display:none;margin-top:8px;padding:8px 0;color:var(--verde)" onclick="limparSelecaoTroca()">Limpar seleção</button>
+    </div>
+
+    <div class="card" style="padding:18px;margin-bottom:18px">
+      <label>Lote de destino *</label>
+      <select id="tl_destino">${optDestino}</select>
+      <label>Data e hora</label>
+      <div class="lado"><input id="tl_data" type="date" value="${hoje()}"><input id="tl_hora" type="time" value="${horaAgora()}"></div>
+      <button class="btn" style="margin-top:16px" onclick="salvarTrocaMultipla()">Mover animais selecionados</button>
+    </div>`;
+}
+function checksTroca(){return [...document.querySelectorAll(".troca-check")];}
+function atualizarSelecaoTroca(){
+  const n=checksTroca().filter(c=>c.checked).length;
+  const el=document.getElementById("tl_contagem");if(el)el.textContent=`${n} selecionado${n===1?"":"s"}`;
+  const limpar=document.getElementById("tl_limpar");if(limpar)limpar.style.display=n?"block":"none";
+}
+function filtrarAnimaisTroca(){
+  const lote=(document.getElementById("tl_origem")||{}).value||"";
+  document.querySelectorAll(".troca-animal").forEach(el=>{el.style.display=(!lote||el.dataset.lote===lote)?"flex":"none";});
+}
+function marcarVisiveisTroca(){
+  document.querySelectorAll(".troca-animal").forEach(el=>{if(el.style.display!=="none"){const c=el.querySelector(".troca-check");if(c)c.checked=true;}});
+  atualizarSelecaoTroca();
+}
+function limparSelecaoTroca(){checksTroca().forEach(c=>c.checked=false);atualizarSelecaoTroca();}
+async function salvarTrocaMultipla(){
+  const ids=checksTroca().filter(c=>c.checked).map(c=>c.value);
+  if(!ids.length)return alert("Selecione pelo menos um animal.");
+  const destino=val("tl_destino");
+  if(!destino)return alert("Selecione o lote de destino.");
+  const data=val("tl_data"),hora=val("tl_hora");
+  const lotes=await getAll("lotes");
+  const nomeLote=id=>(lotes.find(l=>l.id===id)||{}).nome||"—";
+  const nomeDest=nomeLote(destino);
+  let movidos=0,jaEstavam=0;
+  for(const id of ids){
+    const a=await get("animais",id);if(!a)continue;
+    if(a.loteAtualId===destino){jaEstavam++;continue;}
+    const de=nomeLote(a.loteAtualId);
+    a.loteAtualId=destino;await put("animais",a);
+    await registrarEvento(id,"Movimentação",data,`De "${de}" para "${nomeDest}"`,{hora});
+    movidos++;
+  }
+  if(!movidos)return alert("Os animais selecionados já pertencem ao lote de destino.");
+  alert(`${movidos} animal(is) movido(s) para ${nomeDest}.${jaEstavam?` ${jaEstavam} já estava(m) nesse lote.`:""}`);
+  telaTrocaLote();
+}
+
 async function formManejo(tipo){
-  const {propriedades,lotes,animais,medicamentos}=await tudo();
+  const {propriedades,lotes,animais,medicamentos,grupos,grupo_animais}=await tudo();
   if(!lotes.length){fechar();return alert("Cadastre lote e animais primeiro.");}
   const ativos=animais.filter(a=>a.status==="Ativo").sort((x,y)=>(x.codigo||0)-(y.codigo||0));
   const nomeLote=id=>(lotes.find(l=>l.id===id)||{}).nome||"—";
   const optAnimais=ativos.map(a=>`<option value="${a.id}">${esc(rotulo(a))} ${codAnimal(a)} — ${esc(nomeLote(a.loteAtualId))}</option>`).join("");
   const optLotes=lotes.map(l=>{const p=propriedades.find(x=>x.id===l.propriedadeId);return`<option value="${l.id}">${esc(l.nome)}${p?` — ${esc(p.nome)}`:""}</option>`;}).join("");
+
+  const ativosIds=new Set(ativos.map(a=>a.id));
+  const qtdGrupo=gid=>new Set(grupo_animais.filter(v=>v.grupoId===gid&&ativosIds.has(v.animalId)).map(v=>v.animalId)).size;
+  const optGrupos=(grupos||[]).map(g=>`<option value="${g.id}">${esc(g.nome)} — ${qtdGrupo(g.id)} animal(is)</option>`).join("");
+  const checksAnimais=ativos.map(a=>`<label class="mj-multi-item" data-busca="${esc((rotulo(a)+" "+codAnimal(a)+" "+nomeLote(a.loteAtualId)).toLowerCase())}" style="display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--linha);padding:10px 2px;margin:0;color:var(--texto)">
+      <input type="checkbox" class="mj_multi_ck" value="${a.id}" onchange="atualizarContagemManejo()" style="width:20px;height:20px;flex:0 0 auto">
+      <span style="min-width:0"><b>${esc(rotulo(a))}</b> ${codAnimal(a)}<span class="meta" style="display:block">▦ ${esc(nomeLote(a.loteAtualId))}</span></span>
+    </label>`).join("");
+
   let especifico="";
   if(tipo==="Medicamento"){
     const optMed=medicamentos.length
@@ -1821,13 +3291,29 @@ async function formManejo(tipo){
       <div id="grp_outro" style="display:none"><label>Qual evento? *</label><input id="mj_qual" placeholder="Ex: descorna, exame, pesagem…"></div>
       <label>Observação (opcional)</label><input id="mj_obs">`;
   }
+
+  const alvos=tipo==="Marcação"?`
+      <option value="animal">Um animal específico</option>
+      <option value="varios">Vários animais</option>
+      <option value="grupo">Um grupo</option>
+      <option value="lote">Lote inteiro</option>`:`
+      <option value="animal">Um animal específico</option>
+      <option value="lote">Lote inteiro</option>`;
   const titulo=tipo==="Movimentação"?"Trocar de lote":(tipo==="Marcação"?"Marcar animais":(tipo==="Outros"?"Outros eventos":"Medicamento aplicado"));
   abrir(`<h2>${titulo}</h2>
     <label>Aplicar a</label>
-    <select id="mj_alvo" onchange="toggleAlvo()">
-      <option value="animal">Um animal específico</option>
-      <option value="lote">Lote inteiro</option></select>
+    <select id="mj_alvo" onchange="toggleAlvo()">${alvos}</select>
     <div id="grp_animal"><label>Animal</label><select id="mj_animal">${optAnimais||`<option value="">— nenhum animal ativo —</option>`}</select></div>
+    ${tipo==="Marcação"?`<div id="grp_varios" style="display:none">
+      <label>Selecionar animais</label>
+      <input id="mj_busca" placeholder="Buscar por identificação ou lote…" oninput="filtrarAnimaisManejo()">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin:8px 2px 4px;gap:8px">
+        <span id="mj_contagem" class="meta">0 selecionados</span>
+        <button type="button" class="btn-fant" style="padding:4px 0;color:var(--verde);font-weight:700" onclick="marcarVisiveisManejo()">Selecionar visíveis</button>
+      </div>
+      <div style="max-height:260px;overflow:auto;border-top:1px solid var(--linha)">${checksAnimais||`<div class="meta" style="padding:10px 0">Nenhum animal ativo.</div>`}</div>
+    </div>
+    <div id="grp_grupo" style="display:none"><label>Grupo</label><select id="mj_grupo">${optGrupos||`<option value="">— nenhum grupo cadastrado —</option>`}</select></div>`:""}
     <div id="grp_lote" style="display:none"><label>Lote</label><select id="mj_lote">${optLotes}</select></div>
     <label>Data e hora</label>
     <div class="lado"><input id="mj_data" type="date" value="${hoje()}"><input id="mj_hora" type="time" value="${horaAgora()}"></div>
@@ -1836,9 +3322,21 @@ async function formManejo(tipo){
       <button class="btn" onclick="salvarManejo('${tipo}')">Registrar</button></div>`);
 }
 function toggleAlvo(){
-  const lote=document.getElementById("mj_alvo").value==="lote";
-  document.getElementById("grp_animal").style.display=lote?"none":"block";
-  document.getElementById("grp_lote").style.display=lote?"block":"none";
+  const alvo=(document.getElementById("mj_alvo")||{}).value||"animal";
+  const mapa={grp_animal:"animal",grp_varios:"varios",grp_grupo:"grupo",grp_lote:"lote"};
+  Object.entries(mapa).forEach(([id,tipo])=>{const el=document.getElementById(id);if(el)el.style.display=alvo===tipo?"block":"none";});
+}
+function atualizarContagemManejo(){
+  const n=document.querySelectorAll(".mj_multi_ck:checked").length;
+  const el=document.getElementById("mj_contagem");if(el)el.textContent=`${n} selecionado${n===1?"":"s"}`;
+}
+function filtrarAnimaisManejo(){
+  const q=((document.getElementById("mj_busca")||{}).value||"").trim().toLowerCase();
+  document.querySelectorAll(".mj-multi-item").forEach(el=>{el.style.display=(!q||(el.dataset.busca||"").includes(q))?"flex":"none";});
+}
+function marcarVisiveisManejo(){
+  document.querySelectorAll(".mj-multi-item").forEach(el=>{if(el.style.display!=="none"){const c=el.querySelector(".mj_multi_ck");if(c)c.checked=true;}});
+  atualizarContagemManejo();
 }
 function toggleOutro(){
   const el=document.getElementById("grp_outro");
@@ -1853,6 +3351,16 @@ async function salvarManejo(tipo){
     const id=(document.getElementById("mj_animal")||{}).value;
     if(!id)return alert("Selecione o animal.");
     lista=[id];
+  }else if(alvo==="varios"){
+    lista=[...document.querySelectorAll(".mj_multi_ck:checked")].map(c=>c.value);
+    if(!lista.length)return alert("Selecione pelo menos um animal.");
+  }else if(alvo==="grupo"){
+    const grupoId=(document.getElementById("mj_grupo")||{}).value;
+    if(!grupoId)return alert("Selecione o grupo.");
+    const vinculos=await getAll("grupo_animais");
+    const ativos=new Set(todos.filter(a=>a.status==="Ativo").map(a=>a.id));
+    lista=[...new Set(vinculos.filter(v=>v.grupoId===grupoId&&ativos.has(v.animalId)).map(v=>v.animalId))];
+    if(!lista.length)return alert("Esse grupo não tem animais ativos.");
   }else{
     const loteId=(document.getElementById("mj_lote")||{}).value;
     lista=todos.filter(a=>a.loteAtualId===loteId&&a.status==="Ativo").map(a=>a.id);
@@ -1940,6 +3448,7 @@ async function excluirGrupoManejo(tipo,idsCsv){
 
 /* ---------- Cadastro de medicamentos ---------- */
 async function gerenciarMedicamentos(){
+  if(!(await podeUsarApp("Gerenciar medicamentos")))return;
   const meds=await getAll("medicamentos");
   let lst=meds.map(m=>`<div class="sheet-item"><span class="si">💊</span>
     <div style="flex:1"><b>${esc(m.nome)}</b>${m.marca?` · ${esc(m.marca)}`:""}
@@ -2030,6 +3539,7 @@ async function salvarCastracao(id){
   fechar();verAnimal(id);
 }
 async function formEvento(id,tipoFixo){
+  if(!(await podeUsarApp("Registrar manejo")))return;
   const opt=TIPOS.map(t=>`<option value="${t}" ${t===tipoFixo?"selected":""}>${t}</option>`).join("");
   abrir(`<h2>${tipoFixo||"Registrar evento"}</h2>
     <label>Tipo</label><select id="e_tipo">${opt}</select>
@@ -2054,8 +3564,9 @@ async function apagarAnimal(id){if(!confirm("Apagar este animal e seu histórico
 
 /* ======================= BACKUP ======================= */
 async function dadosBackup(){
-  const d={versao:5,exportadoEm:new Date().toISOString()};
-  for(const s of["propriedades","marcas","lotes","animais","eventos","medicamentos","perfil","pastos","avisos","lancamentos"])d[s]=await getAll(s);
+  const d={versao:6,exportadoEm:new Date().toISOString(),syncSchemaVersion:SYNC_SCHEMA_VERSION};
+  // Preserva também tombstones e metadados necessários à futura sincronização.
+  for(const s of DATA_STORES)d[s]=await getAllRaw(s);
   return d;
 }
 async function exportar(){
@@ -2085,23 +3596,50 @@ async function salvarNuvem(){
     alert("Seu navegador não abre o compartilhamento de arquivos. O backup foi baixado — mova para o iCloud Drive pelo app Arquivos.");
   }
 }
+async function restaurarDadosBackup(d,pedirConfirmacao=true){
+  if(!d||typeof d!=="object")throw new Error("Backup inválido.");
+  if(pedirConfirmacao&&!confirm("Importar substitui TODOS os dados atuais. Continuar?"))return false;
+  for(const s of DATA_STORES){
+    for(const it of await getAllRaw(s))await hardDel(s,it.id);
+    for(const original of(d[s]||[])){
+      const it={...original}, agora=agoraISO();
+      if(!it.created_at)it.created_at=agora;
+      if(!it.updated_at)it.updated_at=it.created_at;
+      if(it.deleted_at===undefined)it.deleted_at=null;
+      if(SYNC_STORES.includes(s)){
+        const org=await activeOrgIdLocal();
+        if(org)it.organization_id=org;
+        it.sync_status="pending_create";
+      }else if(!it.sync_status)it.sync_status="pending_create";
+      if(!Number.isFinite(it.sync_version))it.sync_version=1;
+      await putRaw(s,it);
+    }
+  }
+  return true;
+}
 function importar(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();
-  r.onload=async()=>{try{const d=JSON.parse(r.result);
-    if(!confirm("Importar substitui TODOS os dados atuais. Continuar?"))return;
-    for(const s of["propriedades","marcas","lotes","animais","eventos","medicamentos","perfil","pastos","avisos","lancamentos"]){
-      for(const it of await getAll(s))await del(s,it.id);for(const it of(d[s]||[]))await put(s,it);}
-    alert("Backup importado.");render();
+  r.onload=async()=>{try{
+    const d=JSON.parse(r.result);
+    const ok=await restaurarDadosBackup(d,true); if(!ok)return;
+    alert("Backup importado.");renderSeguro();
   }catch(e){alert("Arquivo inválido.");}};r.readAsText(f);}
 
 /* ======================= INICIAR ======================= */
-abrirDB().then(()=>{render();checarNotificacoes();}).catch(()=>{
+abrirDB().then(async()=>{
+  // V60: primeiro abre a interface usando o IndexedDB local.
+  // Supabase/sincronização rodam depois e nunca podem deixar a tela em branco.
+  await renderSeguro();
+  checarNotificacoes();
+  iniciarSyncEmSegundoPlano();
+}).catch((e)=>{
+  console.error("Erro ao abrir IndexedDB:",e);
   $t.innerHTML=`<div class="vazio"><b>Erro ao abrir o banco.</b><div class="meta">Use um navegador normal (não janela privada).</div></div>`;});
 </script>
 <script>
 /* Registra o service worker -> faz o app funcionar offline (sem sinal) */
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW falhou:',err));
+    navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(err=>console.log('SW falhou:',err));
   });
 }
 </script>
